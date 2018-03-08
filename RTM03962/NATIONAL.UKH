@@ -1,0 +1,25 @@
+/* $Header: D:/Projekte/Internationalisierte Anwendungen/Source/rcs/NATIONAL.UKH 1.1 1996/02/28 17:03:57 HaWi Exp $ */
+
+#ifdef __cplusplus
+   extern "C" {
+#endif
+
+#ifndef _NATIONAL_UKH
+   #define _NATIONAL_UKH
+
+   #define A_ABBRECHEN     "Cancel"
+   #define A_DIALOGT       "~Dialog"
+   #define A_HILFE         "Help"
+   #define A_KALENDER      "Calendar"
+   #define A_KALENDERDATEN "7Sun\tMon\tTue\tWed\tThu\tFri\tSat\tJanuary\tFebruary\tMarch\tApril\tMai\tJune\tJuly\tAugust\tSeptember\tOctober\tNovember\tDecember"
+   #define A_KALENDERTD    "~Calendar..."
+   #define A_NATIONAL      "National"
+   #define A_OK            "Ok"
+
+#endif /* _NATIONAL_UKH */
+
+#ifdef __cplusplus
+   }
+#endif
+
+

@@ -1,0 +1,50 @@
+/* $Header: D:/Projekte/Internationalisierte Anwendungen/Source/rcs/NATIONAL.RC 1.1 1996/02/28 17:03:57 HaWi Exp $ */
+
+/* PM Header */
+#define  INCL_PM
+#include <os2.h>
+
+/* Neue PM Controls */
+#include "CLNDR.H"
+
+/* Applikation */
+#include "NATIONAL.H"
+
+/* Welche Sprache soll generiert werden? */
+#if LANGUAGE==1
+   #include "NATIONAL.GRH"
+#endif
+
+#if LANGUAGE==2
+   #include "NATIONAL.UKH"
+#endif
+
+/* Dialog Definition */
+DLGTEMPLATE IDD_DC LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG A_KALENDER, IDD_DC, 0, 0, 180, 145, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      CONTROL       "", IDT_DC1, 12, 20, 156, 100, AXK_CLASSNAME, WS_VISIBLE | WS_GROUP
+         CTLDATA    A_KALENDERDATEN
+      DEFPUSHBUTTON A_OK, DID_OK, 6, 4, 60, 14
+      PUSHBUTTON    A_ABBRECHEN, DID_CANCEL, 68, 4, 60, 14
+      }
+   }
+
+/* Menu Definition */
+MENU IDM_NATIONAL
+   {
+   SUBMENU A_DIALOGT, IDM_DIALOG
+      {
+      MENUITEM A_KALENDERTD, IDM_DIALOGCALENDAR
+      }
+   }
+
+/* Textressourcen */
+STRINGTABLE
+   {
+   IDS_NATIONAL, A_NATIONAL
+   }
+
+

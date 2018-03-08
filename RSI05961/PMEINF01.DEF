@@ -1,0 +1,9 @@
+; $Header: D:/PROJEKTE/Fensterln mit OS!2!1/Source/rcs/PMEINF01.DEF 1.1 1996/01/25 17:57:32 unknown Exp $
+
+NAME      PMEINF01 WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE
+
+
+

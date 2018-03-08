@@ -1,0 +1,9 @@
+; $Header: D:/Projekte/Attraktive Attribute/Source/rcs/EAEDITOR.DEF 1.1 1996/06/01 10:41:28 HaWi Exp $
+
+NAME      EAEDITOR WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE
+
+
+

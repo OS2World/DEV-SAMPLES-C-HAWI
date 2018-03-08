@@ -1,0 +1,91 @@
+/* $Header: D:/Projekte/SOM!WPS Inside!1/Source/rcs/ADRESSE.IDL 1.1 1996/04/10 13:27:43 HaWi Exp $ */
+
+#ifndef ADRESSE_idl
+#define ADRESSE_idl
+
+   #include <wpabs.idl>
+   #include <somcls.idl>
+
+   interface M_Adresse;
+
+   interface Adresse : WPAbstract
+      {
+      #ifdef __SOMIDL__
+         implementation
+            {
+            externalstem = adresse;
+            local;
+            externalprefix = adresse_;
+            majorversion = 1;
+            minorversion = 1;
+            filestem = ADRESSE;
+            metaclass = M_Adresse;
+            callstyle = oidl;
+
+            passthru C_ih_before =
+               "   #define  INCL_BASE"
+               "   #define  INCL_PM"
+               "   #include <os2.h>"
+               "   "
+               "   #include <stdio.h>"
+               "   #include <stdlib.h>"
+               "   #include <string.h>"
+               "   #include <time.h>"
+               "";
+
+            CHAR szField01[65];
+            CHAR szField02[65];
+            CHAR szField03[65];
+            CHAR szField04[65];
+            CHAR szField05[65];
+            CHAR szField06[65];
+            CHAR szField07[65];
+            CHAR szField08[65];
+            CHAR szField09[65];
+            CHAR szField10[65];
+            CHAR szField11[65];
+            CHAR szField12[65];
+            CHAR szOldSelection[65];
+            CHAR szBemerkung[2048];
+
+            wpAddSettingsPages: override;
+            wpFormatDragItem: override;
+            wpRestoreState: override;
+            wpSaveState: override;
+            wpSetup: override;
+            };
+      #endif
+      };
+
+   interface M_Adresse
+      {
+      ULONG clsQueryHini();
+      ULONG clsQueryHmod();
+      #ifdef __SOMIDL__
+         implementation
+            {
+            releaseorder: clsQueryHini, clsQueryHmod;
+            externalstem = adresse;
+            local;
+            externalprefix = adresse_;
+            functionprefix = adresseM_;
+            majorversion = 1;
+            minorversion = 1;
+            filestem = ADRESSE;
+            callstyle = oidl;
+
+            ULONG hini;
+            ULONG hmod;
+
+            wpclsInitData: override;
+            wpclsQueryDefaultView: override;
+            wpclsQueryIconData: override;
+            wpclsQueryTitle: override;
+            wpclsUnInitData: override;
+            };
+      #endif
+      };
+
+#endif
+
+

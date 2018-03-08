@@ -1,0 +1,6 @@
+; $Header: D:\projekte\frame extensions unter os!2\source\RCS\SBAR.DEF 1.1 1995/05/25 15:37:30 HaWi Exp $
+
+LIBRARY     SBAR INITINSTANCE TERMINSTANCE
+DATA        MULTIPLE NONSHARED
+EXPORTS     Deregister @1
+            Register   @2

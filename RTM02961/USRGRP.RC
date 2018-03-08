@@ -1,0 +1,27 @@
+/* $Header: D:/PROJEKTE/Kleine Helferlein!1/Source/rcs/USRGRP.RC 1.1 1995/12/01 11:18:28 HaWi Exp $ */
+
+/* Kopfdateien des OS/2 einlesen */
+#define  INCL_PM
+#include <os2.h>
+
+/* Kopfdatei der Applikation einlesen */
+#include "USRGRP.H"
+
+/* Menuedefinition */
+MENU IDM_USRGRP
+   {
+   SUBMENU "~Scan", IDM_SCAN
+      {
+      MENUITEM "~Groups...", IDM_SGROUP
+      MENUITEM "~User...", IDM_SUSER
+      }
+   }
+
+/* Einige Applikationstexte */
+STRINGTABLE
+   {
+   IDS_PROGRAMM, "UserGroup"
+   }
+
+
+

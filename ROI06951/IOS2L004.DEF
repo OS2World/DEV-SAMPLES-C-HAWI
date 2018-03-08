@@ -1,0 +1,7 @@
+; $Header: D:\projekte\klick und fallen lassen\source\RCS\IOS2L004.DEF 1.1 1995/05/25 18:33:48 HaWi Exp $
+
+LIBRARY     IOS2L004 INITINSTANCE TERMINSTANCE
+DATA        MULTIPLE NONSHARED
+PROTMODE
+EXPORTS     IOS2L_RegisterClass @1
+            IOS2L_WndProc       @2

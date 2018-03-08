@@ -1,0 +1,22 @@
+/* $Header: D:/Projekte/Alles\040geregelt/Source/RCS/DREIDTST.RC 1.1 1995/10/04 13:07:50 HaWi Exp $ */
+
+/* System Kopfdateien laden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Anwendungs Kopfdateien laden */
+#include "DREIDTST.H"
+#include "DREID.H"
+
+/* Beispieldialog */
+DLGTEMPLATE IDD LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "DREID Example", IDD, 0, 0, 206, 48, WS_CLIPSIBLINGS | WS_SAVEBITS | WS_SYNCPAINT | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      {
+      LTEXT         "OUT", 0, 12, 30, 60, 8
+      CONTROL       "OUT", IDT_1, 74, 30, 120, 9, DREID_CLASSNAME, DREID_BOTTOM | DREID_LEFT | DREID_OUT | DREID_VISIBLE
+      LTEXT         "IN", 0, 12, 20, 60, 8
+      CONTROL       "IN", IDT_2, 74, 20, 120, 9, DREID_CLASSNAME, DREID_BOTTOM | DREID_IN | DREID_LEFT | DREID_VISIBLE
+      DEFPUSHBUTTON "Cancel", DID_CANCEL, 6, 4, 60, 12, WS_GROUP
+      }
+   }

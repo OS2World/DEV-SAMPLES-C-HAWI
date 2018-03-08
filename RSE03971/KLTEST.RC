@@ -1,0 +1,60 @@
+/* $Header: Y:/Projekte/Redaktion SE/Knopfleiste/Source/rcs/KLTEST.RC 1.1 1996/12/29 13:49:45 HaWi Exp $ */
+
+/* Presentation Manager Kopfdatei einbinden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Anwendungskopfdatei einbinden */
+#include "KLTEST.H"
+
+/* Menuedefinition */
+MENU IDM_KLTEST
+   {
+   SUBMENU "~Datei", IDM_DATEI
+      {
+      MENUITEM "ô~ffnen",    IDM_DATEIOEFFNEN
+      MENUITEM "~Schlie·en", IDM_DATEISCHLIESSEN
+      MENUITEM "",           0, MIS_SEPARATOR
+      MENUITEM "~Beenden",   DID_CANCEL
+      }
+   SUBMENU "~Bearbeiten", IDM_BEARBEITEN
+      {
+      MENUITEM "~Ausschneiden", IDM_BEARBEITENAUSSCHNEIDEN
+      MENUITEM "~Kopieren",     IDM_BEARBEITENKOPIEREN
+      MENUITEM "~EinfÅgen",     IDM_BEARBEITENEINFUEGEN
+      MENUITEM "~Lîschen",      IDM_BEARBEITENLOESCHEN
+      }
+   SUBMENU "~Schalten", IDM_SCHALTEN
+      {
+      SUBMENU "~Ausschneiden", IDM_SCHALTENAUSSCHNEIDEN
+         {
+         MENUITEM "~Aktivieren",   IDM_SCHALTENAUSSCHNEIDENAKTIVIEREN
+         MENUITEM "~Deaktivieren", IDM_SCHALTENAUSSCHNEIDENDEAKTIVIEREN
+         MENUITEM "~Anschalten",   IDM_SCHALTENAUSSCHNEIDENANSCHALTEN
+         MENUITEM "~Ausschalten",  IDM_SCHALTENAUSSCHNEIDENAUSSCHALTEN
+         }
+      SUBMENU "~Kopieren",     IDM_SCHALTENKOPIEREN
+         {
+         MENUITEM "~Aktivieren",   IDM_SCHALTENKOPIERENAKTIVIEREN
+         MENUITEM "~Deaktivieren", IDM_SCHALTENKOPIERENDEAKTIVIEREN
+         MENUITEM "~Anschalten",   IDM_SCHALTENKOPIERENANSCHALTEN
+         MENUITEM "~Ausschalten",  IDM_SCHALTENKOPIERENAUSSCHALTEN
+         }
+      SUBMENU "~EinfÅgen",     IDM_SCHALTENEINFUEGEN
+         {
+         MENUITEM "~Aktivieren",   IDM_SCHALTENEINFUEGENAKTIVIEREN
+         MENUITEM "~Deaktivieren", IDM_SCHALTENEINFUEGENDEAKTIVIEREN
+         MENUITEM "~Anschalten",   IDM_SCHALTENEINFUEGENANSCHALTEN
+         MENUITEM "~Ausschalten",  IDM_SCHALTENEINFUEGENAUSSCHALTEN
+         }
+      SUBMENU "~Lîschen",      IDM_SCHALTENLOESCHEN
+         {
+         MENUITEM "~Aktivieren",   IDM_SCHALTENLOESCHENAKTIVIEREN
+         MENUITEM "~Deaktivieren", IDM_SCHALTENLOESCHENDEAKTIVIEREN
+         MENUITEM "~Anschalten",   IDM_SCHALTENLOESCHENANSCHALTEN
+         MENUITEM "~Ausschalten",  IDM_SCHALTENLOESCHENAUSSCHALTEN
+         }
+      }
+   MENUITEM "~Hilfe!", IDM_HILFE
+   }
+

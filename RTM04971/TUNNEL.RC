@@ -1,0 +1,15 @@
+/* $Header: D:\Projekte\Redaktion Toolbox\Getunnelt\Source\RCS\TUNNEL.RC 1.1 1997/04/27 16:29:45 HAWI Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "TUNNEL.H"
+
+DLGTEMPLATE IDD LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "PM <--> Java Tunnel", IDD, 0, 0, 132, 130, FS_DLGBORDER | FS_NOBYTEALIGN | WS_SAVEBITS | WS_VISIBLE, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      {
+      CTEXT "", IDT_1, 12, 21, 108, 95
+      }
+   }
+

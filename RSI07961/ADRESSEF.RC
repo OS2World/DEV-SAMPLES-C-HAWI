@@ -1,0 +1,8 @@
+/* $Header: D:/Projekte/SOM!WPS Inside!1/Source/rcs/ADRESSEF.RC 1.1 1996/04/10 13:27:45 HaWi Exp $ */
+
+#include "adressef.ih"
+#include "adressef.rh"
+
+POINTER IDN_ADRESSORDNER ADRESSEF.ICO
+
+

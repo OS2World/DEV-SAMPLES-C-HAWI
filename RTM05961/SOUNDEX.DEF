@@ -1,0 +1,7 @@
+; $Header: D:/Projekte/Kleine Helferlein!3/Source/rcs/SOUNDEX.DEF 1.1 1996/04/27 11:12:58 HaWi Exp $
+
+NAME      SOUNDEX WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+
+

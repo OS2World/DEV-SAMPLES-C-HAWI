@@ -1,0 +1,67 @@
+/* $Header: D:/Projekte/SOM!WPS Inside!1/Source/rcs/ADRESSEF.IDL 1.1 1996/04/10 13:27:44 HaWi Exp $ */
+
+#ifndef ADRESSEF_idl
+#define ADRESSEF_idl
+
+   #include "wpfolder.idl"
+   #include <somcls.idl>
+
+   interface M_AdresseF;
+
+   interface AdresseF : WPFolder
+      {
+      #ifdef __SOMIDL__
+         implementation
+         {
+         externalstem = adressef;
+         local;
+         externalprefix = adressef_;
+         majorversion = 1;
+         minorversion = 1;
+         filestem = ADRESSEF;
+         metaclass = M_AdresseF;
+         callstyle = oidl;
+
+         passthru C_ih_before =
+            "   #define  INCL_BASE"
+            "   #define  INCL_PM"
+            "   #include <os2.h>"
+            "   "
+            "   #include <stdio.h>"
+            "   #include <stdlib.h>"
+            "   #include <string.h>"
+            "   #include <time.h>"
+            "";
+
+            wpDragOver: override;
+            };
+      #endif
+      };
+
+   interface M_AdresseF
+      {
+      #ifdef __SOMIDL__
+         implementation
+            {
+            externalstem = adressef;
+            local;
+            externalprefix = adressef_;
+            functionprefix = adressefM_;
+            majorversion = 1;
+            minorversion = 1;
+            filestem = ADRESSEF;
+            callstyle = oidl;
+
+            ULONG hmod;
+
+            wpclsInitData: override;
+            wpclsQueryIconData: override;
+            wpclsQueryStyle: override;
+            wpclsQueryTitle: override;
+            };
+      #endif /* __SOMIDL__ */
+      };
+
+#endif
+
+

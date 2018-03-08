@@ -1,0 +1,5 @@
+/* $Header: D:/Projekte/SOM!WPS Inside!1/Source/rcs/ADRESSEF.RH 1.1 1996/04/10 13:27:45 HaWi Exp $ */
+
+#define IDN_ADRESSORDNER 1000
+
+

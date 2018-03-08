@@ -1,0 +1,37 @@
+The CREATE FUNCTION call for the database TEST.DBF
+=============================================================================
+
+CONNECT TO sample;
+CREATE FUNCTION TEST (INTEGER,
+                     VARCHAR(255))
+   RETURNS TABLE (NAME       VARCHAR(64),
+                  VORNAME    VARCHAR(64),
+                  PLZ        INT,
+                  GEBURT     DATE,
+                  UMSATZ     VARCHAR(12),
+                  LEDIG      CHAR(1),
+                  NOTIZ      VARCHAR(512))
+   SPECIFIC TEST
+   EXTERNAL NAME 'UDF!UDF'
+   LANGUAGE C
+   PARAMETER STYLE DB2SQL
+   NOT DETERMINISTIC
+   FENCED
+   NOT NULL CALL
+   EXTERNAL ACTION
+   NO SQL
+   SCRATCHPAD
+   FINAL CALL
+   DISALLOW PARALLEL
+   DBINFO;
+CONNECT RESET;
+
+The SELECT using the TABLE FUNCTION for the database TEST.DBF
+=============================================================================
+
+CONNECT TO sample;
+SELECT * FROM TABLE (TEST(7,'')) AS T;
+CONNECT RESET;
+
+Important: The value 7 is required for this specific UDF shown above
+

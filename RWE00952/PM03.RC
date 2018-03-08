@@ -1,0 +1,27 @@
+/* $Header: D:\projekte\fensterln mit os!2\source\RCS\PM03.RC 1.1 1995/05/25 15:34:05 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#define  _PM03_HLP
+#include "PM03.H"
+
+DLGTEMPLATE IDD_HABOUT LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "", IDD_HABOUT, 55, 43, 200, 88, 
+      {
+      CTEXT         "About", IDT_HABOUT1, 10, 64, 180, 8
+      CTEXT         "vs1.00", IDT_HABOUT2, 10, 46, 180, 8
+      CTEXT         "Beispiel 3", IDT_HABOUT3, 10, 38, 180, 8
+      CTEXT         "Harald Wilhelm, K”ln 1995", IDT_HABOUT4, 10, 22, 180, 8
+      DEFPUSHBUTTON "Ok", DID_OK, 76, 7, 50, 13, WS_GROUP
+      }
+   }
+
+MENU IDM_PM03
+   {
+   SUBMENU "~Hilfe", IDM_HILFE
+      {
+      MENUITEM "~About", IDM_HABOUT
+      }
+   }

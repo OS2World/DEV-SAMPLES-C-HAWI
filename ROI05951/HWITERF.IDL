@@ -1,0 +1,81 @@
+#ifndef HWITERF_idl
+#define HWITERF_idl
+
+#include "wpfolder.idl"
+#include <somcls.idl>
+
+interface M_HWITerF;
+
+interface HWITerF : WPFolder
+//# Comment for parent WPFolder:
+
+//---Symbol parentComment is undefined---
+{
+
+#ifdef __SOMIDL__
+  implementation {
+
+    //# Class Modifiers
+    externalstem = hwiterf; 
+    local; 
+    externalprefix = hwiterf_; 
+    majorversion = 1; 
+    minorversion = 1; 
+    filestem = HWITERF;
+    metaclass = M_HWITerF;
+    callstyle = oidl;
+
+    passthru C_ih_before =  "   #define  INCL_BASE"
+"   #define  INCL_PM"
+"   #include <os2.h>"
+"   "
+"   #include <stdio.h>"
+"   #include <stdlib.h>"
+"   #include <string.h>"
+"   #include <time.h>"
+"   "
+"   #define IDN_Termine 1000"
+"";
+
+
+    //# Method Modifiers
+    wpDragOver: override;    
+
+  };
+#endif /* __SOMIDL__ */
+};
+
+interface M_HWITerF
+//# Comment for parent WPFolder:
+
+{
+
+#ifdef __SOMIDL__
+  implementation {
+
+    //# Class Modifiers
+    externalstem = hwiterf; 
+    local; 
+    externalprefix = hwiterf_; 
+    functionprefix = hwiterfM_; 
+    majorversion = 1; 
+    minorversion = 1; 
+    filestem = HWITERF;
+    callstyle = oidl;
+
+    //# Internal Instance Variables
+    HMODULE hmod;                 
+
+    //# Method Modifiers
+    wpclsInitData: override;    
+    wpclsQueryIconData: override;    
+    wpclsQueryStyle: override;    
+    wpclsQueryTitle: override;    
+
+    //# Data Modifiers
+
+  };
+#endif /* __SOMIDL__ */
+};
+
+#endif  /* HWITERF_idl */

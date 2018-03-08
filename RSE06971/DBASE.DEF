@@ -1,0 +1,57 @@
+; $Header: D:\Projekte\Redaktion SE\DBase intim\Source\RCS\DBASE.DEF 1.3 1997/04/21 13:15:11 HAWI Exp $
+
+LIBRARY DBASE INITINSTANCE TERMINSTANCE
+DATA    MULTIPLE NONSHARED
+EXPORTS DBFClose                @1 NONAME
+        DBFCreate               @2 NONAME
+        DBFFLDCount             @3 NONAME
+        DBFFLDDecimal           @4 NONAME
+        DBFFLDGetCharacter      @5 NONAME
+        DBFFLDGetDate           @6 NONAME
+        DBFFLDGetLogical        @7 NONAME
+        DBFFLDGetNumeric        @8 NONAME
+        DBFFLDLength            @9 NONAME
+        DBFFLDName             @10 NONAME
+        DBFFLDNGetCharacter    @11 NONAME
+        DBFFLDNGetDate         @12 NONAME
+        DBFFLDNGetLogical      @13 NONAME
+        DBFFLDNGetNumeric      @14 NONAME
+        DBFFLDNPutCharacter    @15 NONAME
+        DBFFLDNPutDate         @16 NONAME
+        DBFFLDNPutLogical      @17 NONAME
+        DBFFLDNPutNumeric      @18 NONAME
+        DBFFLDNumber           @19 NONAME
+        DBFFLDPutCharacter     @20 NONAME
+        DBFFLDPutDate          @21 NONAME
+        DBFFLDPutLogical       @22 NONAME
+        DBFFLDPutNumeric       @23 NONAME
+        DBFFLDType             @24 NONAME
+        DBFFlush               @25 NONAME
+        DBFOpen                @26 NONAME
+        DBFPack                @27 NONAME
+        DBFRECAppend           @28 NONAME
+        DBFRECBottom           @29 NONAME
+        DBFRECCount            @30 NONAME
+        DBFRECDelete           @31 NONAME
+        DBFRECDeleted          @32 NONAME
+        DBFRECGo               @33 NONAME
+        DBFRECLocateCharacter  @34 NONAME
+        DBFRECLocateDate       @35 NONAME
+        DBFRECLocateLogical    @36 NONAME
+        DBFRECLocateNumeric    @37 NONAME
+        DBFRECNLocateCharacter @38 NONAME
+        DBFRECNLocateDate      @39 NONAME
+        DBFRECNLocateLogical   @40 NONAME
+        DBFRECNLocateNumeric   @41 NONAME
+        DBFRECNumber           @42 NONAME
+        DBFRECRecall           @43 NONAME
+        DBFRECRefresh          @44 NONAME
+        DBFRECSkip             @45 NONAME
+        DBFRECTop              @46 NONAME
+        DBFRECWrite            @47 NONAME
+        DBFType                @48 NONAME
+        DBFUTLCut              @49 NONAME
+        DBFUTLPad              @50 NONAME
+        DBFUTLSoundex          @51 NONAME
+
+

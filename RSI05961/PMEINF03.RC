@@ -1,0 +1,33 @@
+/* $Header: D:/PROJEKTE/Fensterln mit OS!2!1/Source/rcs/PMEINF03.RC 1.2 1996/01/26 11:18:16 HaWi Exp $ */
+
+/* Presentation Manager Kopfdatei einbinden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Anwendungskopfdatei einbinden */
+#include "PMEINF03.H"
+
+/* Ressourcedefinition der Dialoge */
+DLGTEMPLATE IDD_HINFORMATION LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "", IDD_HINFORMATION, 55, 43, 200, 88,
+      {
+      CTEXT         "Information", IDT_HINFORMATION1, 10, 64, 180, 8
+      CTEXT         "vs1.00", IDT_HINFORMATION2, 10, 46, 180, 8
+      CTEXT         "PM EinfÅhrung - Beispiel 3", IDT_HINFORMATION3, 10, 38, 180, 8
+      CTEXT         "Harald Wilhelm, Kîln 1996", IDT_HINFORMATION4, 10, 22, 180, 8
+      DEFPUSHBUTTON "Ok", DID_OK, 76, 7, 50, 13, WS_GROUP
+      }
+   }
+
+/* Menuedefinition der Dialoge */
+MENU IDM_PMEINF03
+   {
+   SUBMENU "~Hilfe", IDM_HILFE
+      {
+      MENUITEM "~Information", IDM_HINFORMATION
+      }
+   }
+
+
+

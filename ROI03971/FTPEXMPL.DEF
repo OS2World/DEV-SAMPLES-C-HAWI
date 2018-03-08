@@ -1,0 +1,6 @@
+; $Header: Y:/Projekte/Redaktion OS!2 Inside/Gute Verbindung/Source/rcs/FTPEXMPL.DEF 1.1 1997/01/03 09:49:53 HaWi Exp $
+
+NAME      FTPEXMPL WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE

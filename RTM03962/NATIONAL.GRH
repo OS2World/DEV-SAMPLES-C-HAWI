@@ -1,0 +1,25 @@
+/* $Header: D:/Projekte/Internationalisierte Anwendungen/Source/rcs/NATIONAL.GRH 1.1 1996/02/28 17:03:56 HaWi Exp $ */
+
+#ifdef __cplusplus
+   extern "C" {
+#endif
+
+#ifndef _NATIONAL_GRH
+   #define _NATIONAL_GRH
+
+   #define A_ABBRECHEN     "Abbrechen"
+   #define A_DIALOGT       "~Dialog"
+   #define A_HILFE         "Hilfe"
+   #define A_KALENDER      "Kalender"
+   #define A_KALENDERDATEN "1Mo\tDi\tMi\tDo\tFr\tSa\tSo\tJanuar\tFebruar\tM„rz\tApril\tMai\tJuni\tJuli\tAugust\tSeptember\tOktober\tNovember\tDezember"
+   #define A_KALENDERTD    "~Kalender..."
+   #define A_NATIONAL      "National"
+   #define A_OK            "Ok"
+
+#endif /* _NATIONAL_GRH */
+
+#ifdef __cplusplus
+   }
+#endif
+
+

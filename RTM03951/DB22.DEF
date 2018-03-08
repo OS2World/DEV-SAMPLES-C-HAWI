@@ -1,0 +1,13 @@
+; $Header: D:\projekte\gib mir die daten.1\source\RCS\DB22.DEF 1.1 1995/05/25 15:52:56 HaWi Exp $
+
+LIBRARY     DB22 INITINSTANCE TERMINSTANCE
+DATA        MULTIPLE NONSHARED
+PROTMODE
+EXPORTS     AllocInfo      @1
+            CloseDatabase  @2
+            CreateDatabase @3
+            DropDatabase   @4
+            FreeInfo       @5
+            OpenDatabase   @6
+            Register       @7
+            WndProc        @8

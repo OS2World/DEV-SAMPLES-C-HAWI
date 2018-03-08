@@ -1,0 +1,41 @@
+/* $Header: D:/Projekte/SOM!WPS Inside!1/Source/rcs/ADRESSE.RH 1.1 1996/04/10 13:27:44 HaWi Exp $ */
+
+#define DID_HELP      3
+
+#define IDN_ADRESSE   1000
+#define IDD_ADRESSE1  1001
+#define IDE_FIELD01   1002
+#define IDE_FIELD02   1003
+#define IDE_FIELD03   1004
+#define IDE_FIELD04   1005
+#define IDE_FIELD05   1006
+#define IDE_FIELD06   1007
+#define IDT_FIELD01   1008
+#define IDT_FIELD02   1009
+#define IDT_FIELD03   1010
+#define IDT_FIELD04   1011
+#define IDT_FIELD05   1012
+#define IDT_FIELD06   1013
+
+#define IDD_ADRESSE2  1014
+#define IDE_FIELD07   1015
+#define IDE_FIELD08   1016
+#define IDE_FIELD09   1017
+#define IDE_FIELD10   1018
+#define IDE_FIELD11   1019
+#define IDE_FIELD12   1020
+#define IDT_FIELD07   1021
+#define IDT_FIELD08   1022
+#define IDT_FIELD09   1023
+#define IDT_FIELD10   1024
+#define IDT_FIELD11   1025
+#define IDT_FIELD12   1026
+
+#define IDD_BEMERKUNG 1027
+#define IDF_BEMERKUNG 1028
+
+#define IDD_GLOBAL    1029
+#define IDL_KEY       1030
+#define IDE_VALUE     1031
+
+

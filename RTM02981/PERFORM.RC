@@ -1,0 +1,20 @@
+/* $Header: D:\Projekte\Redaktion Toolbox\Geschwindigkeitsrausch\Source\RCS\PERFORM.RC 1.1 1997/11/30 14:58:53 HAWI Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "PERFORM.H"
+
+DLGTEMPLATE IDD_PERFORM LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG  "Geschwindigkeitsrausch", IDD_PERFORM, 10, 10, 108, 84, WS_VISIBLE, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+   PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      LTEXT         "Monitor CPU", IDT_P1, 8, 70, 52, 8
+      SPINBUTTON    IDSP_P1, 60, 70, 32, 12, SPBS_READONLY | SPBS_MASTER | NOT SPBS_SERVANT | SPBS_JUSTLEFT | SPBS_FASTSPIN | WS_GROUP
+      CONTROL       "", IDT_P2, 8, 20, 84, 46, PXK_CLASSNAME, WS_VISIBLE | WS_GROUP
+      PRESPARAMS    PP_FONTNAMESIZE, "8.Helv"
+      DEFPUSHBUTTON "Ok", DID_OK, 12, 4, 76, 14, WS_GROUP
+      }
+   }
+

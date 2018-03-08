@@ -1,0 +1,6 @@
+; $Header: D:\projekte\kuchengrafik unter os!2\source\RCS\CAKE.DEF 1.1 1995/05/25 18:46:00 HaWi Exp $
+
+LIBRARY     CAKE INITINSTANCE TERMINSTANCE
+DATA        MULTIPLE NONSHARED
+PROTMODE
+EXPORTS     CRegisterClass @1

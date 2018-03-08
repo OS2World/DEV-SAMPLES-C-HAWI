@@ -1,0 +1,7 @@
+; $Header: D:\Projekte\Redaktion Toolbox\Geschwindigkeitsrausch\Source\RCS\PERFORM.DEF 1.1 1997/11/30 14:58:45 HAWI Exp $
+
+NAME      PERFORM WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE
+

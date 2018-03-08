@@ -1,0 +1,41 @@
+/* $Header: D:/Projekte/Kleine Helferlein!2/Source/rcs/PROGRESS.RC 1.1 1996/03/06 13:54:18 HaWi Exp $ */
+
+/* Presentation Manager Kopfdatei */
+#define  INCL_PM
+#include <os2.h>
+
+/* Applikations Kopfdatei */
+#include "PROGRESS.H"
+
+/* Dialog Definitionen */
+DLGTEMPLATE IDD_PG LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "", IDD_PG, 0, 0, 299, 88, FS_DLGBORDER | FS_NOBYTEALIGN | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_SYNCPAINT | WS_VISIBLE, FCF_SYSMENU | FCF_TITLEBAR
+      PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      LTEXT      "Prozent abgeschlossen", 0, 8, 55, 118, 10
+      SLIDER     IDSL_PG1, 109, 41, 188, 40, SLS_RIBBONSTRIP | SLS_HORIZONTAL | SLS_HOMELEFT | SLS_CENTER | SLS_READONLY | SLS_PRIMARYSCALE2 | WS_GROUP
+         CTLDATA 12, 0, 101, 0, 101, 0
+      LTEXT      "abgelaufene Zeit", IDT_PG1, 8, 22, 118, 10
+      LTEXT      "", IDT_PG2, 134, 22, 96, 10
+      PUSHBUTTON "Stop", DID_CANCEL, 6, 4, 60, 14
+      }
+   }
+
+/* Menu Definitionen */
+MENU IDM_PROGRESS
+   {
+   SUBMENU "~Dialog", IDM_DIALOG
+      {
+      MENUITEM "~Progress...", IDM_DIALOGPROGRESS
+      }
+   }
+
+/* Text Definitionen */
+STRINGTABLE
+   {
+   IDS_SIMPLERZAEHLER, "Simpler Z„hler"
+   IDS_WIRDGESTOPPT,   " wird gestoppt"
+   }
+
+

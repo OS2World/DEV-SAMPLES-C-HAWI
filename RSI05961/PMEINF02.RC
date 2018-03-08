@@ -1,0 +1,22 @@
+/* $Header: D:/PROJEKTE/Fensterln mit OS!2!1/Source/rcs/PMEINF02.RC 1.2 1996/01/26 11:16:14 HaWi Exp $ */
+
+/* Presentation Manager Kopfdatei einbinden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Anwendungskopfdatei einbinden */
+#include "PMEINF02.H"
+
+/* Menuedefinition der Dialoge */
+MENU IDM_PMEINF02
+   {
+   SUBMENU "~Farbe des Hintergrunds", IDM_FARBEDESHINTERGRUNDS
+      {
+      MENUITEM "~Rosa",     IDM_FROSA
+      MENUITEM "~Hellblau", IDM_FHELLBLAU
+      MENUITEM "~Gelb",     IDM_FGELB
+      }
+   }
+
+
+

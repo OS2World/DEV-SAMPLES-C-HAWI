@@ -1,0 +1,7 @@
+; $Header: Y:/Projekte/Redaktion SE/Knopfleiste/Source/rcs/KLEISTE.DEF 1.1 1996/12/29 13:49:40 HaWi Exp $
+
+LIBRARY KLEISTE INITINSTANCE TERMINSTANCE
+DATA    MULTIPLE NONSHARED
+EXPORTS KLeisteDeregister @1 NONAME
+        KLeisteRegister   @2 NONAME
+        

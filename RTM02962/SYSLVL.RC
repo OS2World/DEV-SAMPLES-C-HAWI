@@ -1,0 +1,73 @@
+/* $Header: D:/Projekte/Viel System!1/Source/rcs/SYSLVL.RC 1.2 1995/11/27 16:48:35 HaWi Exp $ */
+
+/* Kopfdateien des OS/2 einlesen */
+#define  INCL_PM
+#include <os2.h>
+
+/* Kopfdatei der Applikation einlesen */
+#include "SYSLVL.H"
+
+/* Dialogdefinition */
+DLGTEMPLATE IDD_S LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "", IDD_S, 0, 0, 310, 170, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      LTEXT         "~Filename", IDT_S1, 8, 156, 90, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_SMODUL, 102, 156, 146, 8, ES_MARGIN
+      LTEXT         "Date", IDT_S2, 8, 142, 40, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_SDATE, 101, 141, 50, 10, ES_MARGIN
+      LTEXT         "SYS Id", IDT_S3, 8, 130, 90, 8
+      ENTRYFIELD    "0", IDE_SSYSID, 102, 130, 50, 8, ES_MARGIN
+      LTEXT         "", IDT_SSYSID, 159, 129, 140, 8
+      LTEXT         "System", IDT_S4, 8, 118, 90, 8
+      ENTRYFIELD    "", IDE_SSYSTEM, 102, 118, 196, 8, ES_MARGIN
+      LTEXT         "Component", IDT_S5, 8, 106, 90, 8
+      ENTRYFIELD    "", IDE_SCOMPONENT, 102, 106, 80, 8, ES_MARGIN
+      LTEXT         "Type", IDT_S6, 8, 94, 90, 8
+      ENTRYFIELD    "", IDE_STYPE, 102, 94, 80, 8, ES_MARGIN
+      LTEXT         "System Edition", IDT_S7, 8, 82, 90, 8
+      COMBOBOX      "", IDC_SSYSEDITION, 100, 31, 199, 60, CBS_DROPDOWNLIST
+      LTEXT         "Maj/Min/Mod/Ref", IDT_S8, 8, 70, 90, 8
+      ENTRYFIELD    "0", IDE_SMAJOR, 101, 69, 22, 10, ES_MARGIN
+      ENTRYFIELD    "0", IDE_SMINOR, 123, 69, 22, 10, ES_MARGIN
+      ENTRYFIELD    "0", IDE_SMODIFY, 145, 69, 22, 10, ES_MARGIN
+      ENTRYFIELD    "0", IDE_SREFRESH, 167, 69, 22, 10, ES_MARGIN
+      LTEXT         "CSD Prefix", IDT_S9, 8, 58, 90, 8
+      ENTRYFIELD    "", IDE_SCSDPREFIX, 102, 58, 20, 8, ES_MARGIN
+      LTEXT         "Country", IDT_S10, 8, 46, 90, 8
+      COMBOBOX      "", IDC_SCOUNTRY, 100, -5, 199, 60, CBS_DROPDOWNLIST
+      LTEXT         "CSD Suffix (Current)", IDT_S11, 8, 34, 90, 8
+      ENTRYFIELD    "0", IDE_SCSDCURRENT, 101, 33, 32, 10, ES_MARGIN
+      LTEXT         "CSD Suffix (Previous)", IDT_S12, 8, 22, 90, 8
+      ENTRYFIELD    "0", IDE_SCSDPREVIOUS, 101, 21, 32, 10, ES_MARGIN
+      DEFPUSHBUTTON "Ok", DID_OK, 6, 4, 60, 14, WS_GROUP
+      }
+   }
+
+/* Menuedefinition */
+MENU IDM_SYSLVL
+   {
+   SUBMENU "~Syslevel", IDM_SYSLEVEL
+      {
+      MENUITEM "~View...", IDM_SVIEW
+      }
+   }
+
+/* Einige Applikationstexte */
+STRINGTABLE
+   {
+   IDS_CREATE    "Create Syslevel"
+   IDS_DATUM,    "Date"
+   IDS_GROESSE,  "Size"
+   IDS_MODUL,    "Filename"
+   IDS_PROGRAMM, "Syslevel"
+   IDS_SYSLEVEL, "Syslevel"
+   IDS_TITEL,    "Syslevel list"
+   IDS_UHRZEIT,  "Time"
+   IDS_VIEW,     "View Syslevel"
+   IDS_WAIT,     "Gathering data, please wait ..."
+   }
+
+
+

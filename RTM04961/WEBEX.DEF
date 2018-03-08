@@ -1,0 +1,8 @@
+; $Header: D:/Projekte/Exploring WebExplorer/Source/rcs/WEBEX.DEF 1.1 1996/04/14 17:30:39 HaWi Exp $
+
+NAME      WEBEX WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE
+
+

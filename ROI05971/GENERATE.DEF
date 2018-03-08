@@ -1,0 +1,7 @@
+; $Header: y:/projekte/redaktion os!2 inside/Ganz geheim/Source/rcs/GENERATE.DEF 1.1 1997/03/07 15:30:58 HAWI Exp $
+
+NAME      GENERATE WINDOWCOMPAT
+DATA      NONSHARED 
+STACKSIZE 131068
+PROTMODE
+

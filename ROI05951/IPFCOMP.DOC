@@ -1,0 +1,158 @@
+IPFCOMP.EXE is a shell for IPFC.EXE, the IBM Information Presentation Facility
+compiler. It allows for preprocessing of IPF files so you can use #include
+statements in your IPF file to allow for resid macro expansion.  It does this
+by first invoking a compiler's PreProcessor against the IPF file, then running
+IPFC.EXE against the preprocessed file.
+
+IPFCOMP.EXE supports .im (imbedded) IPF files. All .im files will be
+preprocessed before the main IPF file is sent to IPFC.EXE. Header files found
+in the main IPF file will be automatically placed in the .imbedded IPF files.
+It is OK to also have header files in the .imbedded files, even if they are
+the same as those in the main file.
+
+The /PC option allows you to specify the PreProcessor CommandLine so you can
+use any preprocessor you want. The default is the IBM C Set/2 compiler with
+the command line "icc /P+ /W0".  IPFCOMP has been tested with this command
+line as well as that for the MSC 16-bit compiler with the command line
+"cl -P". Any other command lines are not tested so it could turn out that
+IPFCOMP cannot support their output. Also it is assumed that the output from
+the PreProcessor is named with a .I extension. If you find that IPFCOMP does
+not work with your PreProcessor, let me know via CIS (ID 72251,750) and I
+should be able to easily build in support for it.
+
+Steps are taken to ensure that the errors output by IPFC.EXE will show the
+correct file names and line numbers.
+
+Ctrl-Break and Ctrl-C are fully supported at all stages of execution.
+Interrupting IPFCOMP at any point should direct IPFCOMP to clean up after
+itself and rename, delete any temporary files currently in use.
+
+KNOWN PROBLEM: If a reboot takes place during execution of IPFCOMP, the
+input files and temporary files will most likely be in a transient state.
+Use the /tf (Temp File info) option to find out how to recover if this
+happens.
+
+Invoking IPFCOMP without any command-line parameters gets this screen:
+
+------------------------------------------------------------------------------
+usage: ipfcomp [ option, option, ... ] ipf-filepath [ output-path ]
+
+options (besides the IPFC options):
+        /DC - Don't Compensate for ANSI PreProcessing
+        /EF - Create Error File of IPFC errors
+        /KP - Keep Precompiler output file(s)
+        /PC - Precompiler Command (defaults to "icc.exe /P+ /W0")
+              usage: /PC "command" (leave a space between /PC and "command")
+                                  (command MUST be in quotes)
+        /PO - Precompile only (/KP assumed)
+        /TF - Temp File info (explain temporary file usage)
+------------------------------------------------------------------------------
+
+ALL COMMAND-LINE OPTIONS NOT RECOGNIZED BY IPFCOMP AS INTERNAL OPTIONS ARE
+PASSED ON TO IPFC.EXE.
+
+ipf-filepath is the path and filename of the IPF file that is to be used as
+             input to IPFCOMP.  The extension does not have to be .ipf, but
+             defaults to .ipf if no file extension is given.
+
+output-path allows you to specify a path to place the .HLP or .INF file output
+            by IPFC.EXE. It defaults to the current directory.
+
+Further explanation of the command-line options:
+
+/DC - ANSI PreProcessing standards call for inserting whitespace before and
+      after macro expansion. For example, after ANSI PreProcessing, this:
+
+                       #define IDD_ABOUT  20
+                       resid=IDD_ABOUT.About Dialog Box
+
+      translates into this:
+
+                       resid= 20 .About Dialog Box
+
+      The spaces after the '=' and before the '.' cause many errors by IPFC.EXE.
+
+      Therefore IPFCOMP.EXE post-processes the precompiled file (say THAT ten
+      times fast) to remove the whitespace. This does impose the limitation that
+      if your IPF file has text that has an '=' sign followed by a space, that
+      space will be lost.
+
+      The /DC option stops IPFCOMP from performing this fixup. Because of the
+      reasons that IPFCOMP does this in the first place, obviously /DC is only
+      valid if you are using a PreProcessor that does not conform to ANSI
+      standards, such as the MSC PreProcessor. The IBM C Set/2 compiler DOES
+      use ANSI PreProcessing.
+
+/EF - This will create an error file (basename.ERR) in the current directory
+      that contains the error messages output by IPFC.EXE. The errors will
+      also be echoed to the display as usual.
+
+/KP - You may want to see the IPF files after preprocessing and fixup as they
+      will be input to IPFC.EXE. The /KP option will keep all .I files (IPFCOMP
+      will not delete them) so they can be viewed.
+
+/PC - This option allows you to specify an alternative PreCompiler Commandline
+      to "icc /P+ /W0" (the default). If used, it MUST be formatted like this
+      (using the MSC command line as an example):
+
+                /PC "cl -P"
+
+      There MUST be a space between the /PC and the first double-quote, and
+      there MUST be double quotes surrounding the command.
+
+      The only command-lines tested thus far are the two mentioned (ICC.EXE and
+      CL.EXE). Depending on other precompilers and the way they format their
+      output from the precompile stage, they may or may not work. I would
+      definitely not assume that they work. You'd have to give it a try. If
+      you find one that does not, I will be glad to build support for it if you
+      let me know via my CIS ID 72251,750.
+
+/PO - Performs the PreCompile and fixup steps only and keeps the .I files that
+      are output by the precompiler.
+
+/TP - Displays the temporary file extensions that are used during IPFCOMP
+      execution and how to recover should you reboot while IPFCOMP is running.
+      The following screen is displayed:
+
+-------------------------------------------------------------------------------
+The following temporary files extensions are used during execution of IPFCOMP:
+
+I   - Output from Precompiler
+$IH - Imbed Hold file (.im file before IPFCOMP execution)
+$IT - Imbed Temp file (.im file in temporary state)
+$FP - Fixed Precompiler output (.I file after tailoring)
+$MH - Main Hold file (main IPF file before IPFCOMP execution)
+
+IF ANY OF THESE FILES EXIST AFTER IPFCOMP EXECUTION:
+      (probably after a reboot during IPFCOMP)
+
+1. You can delete any $IT or $FP files.
+
+2. If a $MH file remains:
+   A. The $MH file should be your original file. Verify this.
+   B. Delete the .IPF file with the same base name.
+   C. Rename the $MH file to .IPF.
+
+3. If a $IH file remains:
+   A. The $IH file should be the original .im file. Verify this.
+   B. Delete the .IPF file with the same base name.
+   C. Rename the $IH file to .IPF.
+
+NOTES: 1. .im is the IPF tag used to imbed an IPF file within
+          another IPF file.
+       2. The IPF files that are input to IPFCOMP can have any
+          extension but those mentioned above.
+-------------------------------------------------------------------------------
+
+DON'T GET SCARED BY THIS SEEMINGLY COMPLICATED DOC. I USE IPFCOMP ALL THE TIME
+AND NEVER HAVE ANY PROBLEMS.
+
+Any comments, suggestions, bug reports can be sent to my CIS id 72251,750.
+
+Hope this utility proves useful.
+
+Rick Fishman
+Code Blazers, Inc.
+4113 Apricot
+Irvine, CA 92720
+

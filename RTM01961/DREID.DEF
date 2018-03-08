@@ -1,0 +1,10 @@
+; $Header: D:/Projekte/Alles\040geregelt/Source/RCS/DREID.DEF 1.1 1995/10/04 12:08:02 HaWi Exp $
+
+LIBRARY     DREID INITINSTANCE TERMINSTANCE
+DATA        MULTIPLE NONSHARED
+PROTMODE
+EXPORTS     DREIDRegister @1
+            DREIDQuery    @2
+            DREIDStyles   @3
+
+

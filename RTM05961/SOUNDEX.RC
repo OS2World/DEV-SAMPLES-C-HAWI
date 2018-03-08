@@ -1,0 +1,54 @@
+/* $Header: D:/Projekte/Kleine Helferlein!3/Source/rcs/SOUNDEX.RC 1.1 1996/04/27 11:12:59 HaWi Exp $ */
+
+/* Presentation Manager Kopfdatei */
+#define  INCL_PM
+#include <os2.h>
+
+/* Applikations Kopfdatei */
+#include "SOUNDEX.H"
+
+/* Dialog Definitionen */
+DLGTEMPLATE IDD_SOUNDEX LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Dialog Soundex", IDD_SOUNDEX, 0, 0, 226, 134, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      /* Liste der Beispieltexte */
+      LISTBOX       IDL_SX1, 12, 20, 100, 100, LS_MULTIPLESEL
+      LTEXT         "Suchwort:", 0, 116, 110, 98, 8
+      ENTRYFIELD    "", IDE_SX1, 116, 98, 98, 8, ES_MARGIN
+      LTEXT         "", IDT_SX1, 116, 20, 98, 8
+      DEFPUSHBUTTON "Cancel", DID_CANCEL, 4, 4, 60, 14
+      PUSHBUTTON    "öberprÅfen", IDP_SX1, 68, 4, 60, 14
+      }
+   }
+
+/* Menu Definitionen */
+MENU IDM_SOUNDEX
+   {
+   SUBMENU "~Dialog", IDM_DIALOG
+      {
+      MENUITEM "~Soundex...", IDM_DIALOGSOUNDEX
+      }
+   }
+
+/* Einige Texte */
+STRINGTABLE
+   {
+   IDS_BTREFFER,                       " Treffer"
+   (IDS_INITLISTBOXLOW + 0),           "Amerika"
+   (IDS_INITLISTBOXLOW + 1),           "Deutschland"
+   (IDS_INITLISTBOXLOW + 2),           "Fîn"
+   (IDS_INITLISTBOXLOW + 3),           "Harald"
+   (IDS_INITLISTBOXLOW + 4),           "Kîln"
+   (IDS_INITLISTBOXLOW + 5),           "Maier"
+   (IDS_INITLISTBOXLOW + 6),           "Mayer"
+   (IDS_INITLISTBOXLOW + 7),           "Meier"
+   (IDS_INITLISTBOXLOW + 8),           "MÅller"
+   (IDS_INITLISTBOXLOW + 9),           "Schmitz"
+   (IDS_INITLISTBOXLOW + 10),          "Washington"
+   (IDS_INITLISTBOXLOW + 11),          "Wilhelm"
+   IDS_KEINENPASSENDENEINTRAGGEFUNDEN, "Keinen passenden Eintrag gefunden"
+   }
+
+

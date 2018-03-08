@@ -1,0 +1,39 @@
+/* $Header: D:/projekte/blasen\040im\040os!2/source/RCS/TSTBLASE.RC 1.1 1995/07/02 13:24:31 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "TSTBLASE.H"
+
+DLGTEMPLATE IDD LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Beispiel", IDD, 0, 0, 270, 94, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      {
+      GROUPBOX        "",            0,       12,  70, 246,  20
+      AUTORADIOBUTTON "~Radio 1",    IDR_1,   26,  72,  66,  10, WS_GROUP
+      AUTORADIOBUTTON "~Radio 2",    IDR_2,  100,  72,  66,  10
+      AUTORADIOBUTTON "~Radio 3",    IDR_3,  174,  72,  66,  10
+      LTEXT           "Anzahl",      0,      154,  56,  40,   8
+      LTEXT           "",            IDT_1,  194,  56,  32,   8
+      LTEXT           "~Index:",     0,      154,  44,  40,   8, DT_MNEMONIC
+      ENTRYFIELD      "",            IDE_1,  194,  44,  60,   8, ES_MARGIN
+      LTEXT           "~Wert:",      0,      154,  32,  40,   8, DT_MNEMONIC
+      ENTRYFIELD      "",            IDE_2,  194,  32,  60,   8, ES_MARGIN
+      LTEXT           "~Titel:",     0,      154,  20,  40,   8, DT_MNEMONIC
+      ENTRYFIELD      "",            IDE_3,  194,  20,  60,   8, ES_MARGIN
+      DEFPUSHBUTTON   "Ž~ndern",     IDP_3,    6,   4,  74,  14, WS_GROUP
+      }
+   }
+
+STRINGTABLE
+   {
+   IDE_1, "Index"
+   IDE_2, "Wert"
+   IDE_3, "Titel"
+   IDP_3, "Žndern"
+   IDR_1, "Radio 1"
+   IDR_2, "Radio 2"
+   IDR_3, "Radio 3"
+   IDT_1, "Anzahl"
+   }
+

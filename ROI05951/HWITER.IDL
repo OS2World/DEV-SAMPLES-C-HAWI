@@ -1,0 +1,108 @@
+/* $Header: D:\projekte\som!wps inside\source\RCS\HWITER.IDL 1.1 1995/05/25 18:53:41 HaWi Exp $ */
+
+#ifndef HWITER_idl
+#define HWITER_idl
+
+#include "wpabs.idl"
+#include <somcls.idl>
+
+interface M_HWITer;
+
+interface HWITer : WPAbstract
+//# Comment for parent WPAbstract:
+
+//---Symbol parentComment is undefined---
+{
+  BOOL checkDateTime();
+  APIRET DeskMan2QuerySetup(in WPObject setupObject);
+
+
+#ifdef __SOMIDL__
+  implementation {
+
+    releaseorder: checkDateTime,DeskMan2QuerySetup;
+
+    //# Class Modifiers
+    externalstem = hwiter; 
+    local; 
+    externalprefix = hwiter_; 
+    majorversion = 1; 
+    minorversion = 1; 
+    filestem = HWITER;
+    metaclass = M_HWITer;
+    callstyle = oidl;
+
+    passthru C_ih_before =  "   #define  INCL_BASE"
+"   #define  INCL_PM"
+"   #include <os2.h>"
+"   "
+"   #include <stdio.h>"
+"   #include <stdlib.h>"
+"   #include <string.h>"
+"   #include <time.h>"
+"   "
+"";
+
+
+    //# Internal Instance Variables
+    CDATE cdate;                  
+    CDATE cdateLastBeep;          
+    CTIME ctime;             
+    ULONG ulFormat;               
+    CHAR szBemerkung[2048];       
+
+    //# Method Modifiers
+    wpAddSettingsPages: override;    
+    wpFormatDragItem: override;    
+    wpInitData: override;    
+    wpRestoreState: override;    
+    wpSaveState: override;    
+    wpSetup: override;    
+
+    //# Data Modifiers
+
+  };
+#endif /* __SOMIDL__ */
+};
+
+interface M_HWITer
+//# Comment for parent WPAbstract:
+
+{
+  HMODULE clsQueryHmod();
+
+
+#ifdef __SOMIDL__
+  implementation {
+
+    releaseorder: clsQueryHmod;
+
+    //# Class Modifiers
+    externalstem = hwiter; 
+    local; 
+    externalprefix = hwiter_; 
+    functionprefix = hwiterM_; 
+    majorversion = 1; 
+    minorversion = 1; 
+    filestem = HWITER;
+    callstyle = oidl;
+
+    //# Internal Instance Variables
+    BOOL    f;                       
+    HMODULE hmod;                 
+    HEV     hev;                      
+
+    //# Method Modifiers
+    wpclsInitData: override;    
+    wpclsQueryDefaultView: override;    
+    wpclsQueryIconData: override;    
+    wpclsQueryTitle: override;    
+    wpclsUnInitData: override;    
+
+    //# Data Modifiers
+
+  };
+#endif /* __SOMIDL__ */
+};
+
+#endif  /* HWITER_idl */

@@ -1,0 +1,34 @@
+/* $Header: D:\projekte\einfach sql\source\RCS\EINFSQL.RC 1.1 1995/05/25 15:30:03 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "EINFSQL.H"
+
+DLGTEMPLATE IDD LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Einfach SQL", IDD, 0, 0, 301, 126, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      {
+      LTEXT      "SchlÅssel",  0,                8, 112, 100,   8
+      LTEXT      "",           IDT_SCHLUESSEL, 104, 112, 189,   8
+      LTEXT      "Name",       0,                8, 100, 100,   8
+      ENTRYFIELD "",           IDE_NAME,       104, 100, 189,   8, ES_MARGIN
+      LTEXT      "Vorname",    0,                8,  88, 100,   8
+      ENTRYFIELD "",           IDE_VORNAME,    104,  88, 189,   8, ES_MARGIN
+      LTEXT      "Strasse",    0,                8,  76, 100,   8
+      ENTRYFIELD "",           IDE_STRASSE,    104,  76, 189,   8, ES_MARGIN
+      LTEXT      "Plz",        0,                8,  64, 100,   8
+      ENTRYFIELD "",           IDE_PLZ,        104,  64,  89,   8, ES_MARGIN
+      LTEXT      "Ort",        0,                8,  52, 100,   8
+      ENTRYFIELD "",           IDE_ORT,        104,  52, 189,   8, ES_MARGIN
+      LTEXT      "Telefon",    0,                8,  40, 100,   8
+      ENTRYFIELD "",           IDE_TELEFON,    104,  40,  89,   8, ES_MARGIN
+      PUSHBUTTON "Neu",        IDP_NEU,          6,  20,  60,  14
+      PUSHBUTTON "éndern",     IDP_AENDERN,     69,  20,  60,  14
+      PUSHBUTTON "Lîschen",    IDP_LOESCHEN,   132,  20,  60,  14
+      PUSHBUTTON "Anfang",     IDP_ANFANG,       6,   4,  60,  14
+      PUSHBUTTON "ZurÅck",     IDP_ZURUECK,     69,   4,  60,  14
+      PUSHBUTTON "Vor",        IDP_VOR,        132,   4,  60,  14
+      PUSHBUTTON "Ende",       IDP_ENDE,       195,   4,  60,  14
+      }
+   }

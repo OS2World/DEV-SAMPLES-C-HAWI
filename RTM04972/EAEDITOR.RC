@@ -1,0 +1,94 @@
+/* $Header: D:/Projekte/Attraktive Attribute/Source/rcs/EAEDITOR.RC 1.1 1996/06/01 10:41:28 HaWi Exp $ */
+
+/* OS/2 Header */
+#define  INCL_PM
+#include <os2.h>
+
+/* Applikationsheader */
+#include "EAEDITOR.H"
+
+/* Dialog EA */
+DLGTEMPLATE IDD_EA LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "EA", IDD_EA, 0, 0, 258, 122, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      LTEXT         "Dateiname", IDT_EA_1, 9, 108, 50, 10
+      LTEXT         "", IDT_EA_2, 62, 108, 178, 10
+      LTEXT         "EAs", IDT_EA_3, 9, 96, 50, 10
+      LISTBOX       IDL_EA_1, 62, 44, 178, 60
+      LTEXT         "EA Type", IDT_EA_4, 9, 32, 50, 10
+      LTEXT         "", IDT_EA_5, 62, 32, 178, 10
+      LTEXT         "ASCII", IDT_EA_6, 9, 20, 50, 10
+      ENTRYFIELD    "", IDE_EA_1, 62, 21, 178, 8, ES_MARGIN
+      DEFPUSHBUTTON "Ok", DID_OK, 6, 4, 60, 14
+      PUSHBUTTON    "~Neues EA...", IDP_EA_1, 68, 4, 60, 14
+      PUSHBUTTON    "Žn~dern", IDP_EA_2, 130, 4, 60, 14
+      PUSHBUTTON    "~L”schen", IDP_EA_3, 192, 4, 60, 14
+      }
+   }
+
+/* Dialog EA neu */
+DLGTEMPLATE IDD_EANEW LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Neues EA", IDD_EANEW, 0, 0, 258, 98, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      LTEXT           "Dateiname", IDT_EANEW_1, 9, 84, 50, 10
+      LTEXT           "", IDT_EANEW_2, 62, 84, 178, 10
+      LTEXT           "~EA Name", IDT_EANEW_3, 9, 72, 50, 10, DT_MNEMONIC
+      ENTRYFIELD      "", IDE_EANEW_1, 62, 73, 178, 8, ES_MARGIN
+      GROUPBOX        "EA Type", IDG_EANEW_1, 6, 20, 246, 42
+      AUTORADIOBUTTON "~ASCII", IDR_EANEW_1, 12, 44, 164, 10, WS_TABSTOP | WS_GROUP
+      AUTORADIOBUTTON "Multi-~value Single-type", IDR_EANEW_2, 12, 34, 164, 10, WS_TABSTOP
+      AUTORADIOBUTTON "Multi-value Multi-~type", IDR_EANEW_3, 12, 24, 164, 10, WS_TABSTOP
+      DEFPUSHBUTTON   "Ok", DID_OK, 6, 4, 60, 14
+      }
+   }
+
+/* Kontextmenue fuer Dateicontainer */
+MENU IDM_DIR
+   {
+   MENUITEM "~Delete",          IDM_DIRDELETE
+   MENUITEM "~EA Editieren...", IDM_DIREAEDIT
+   }
+
+/* Kontextmenue fuer Verzeichniscontainer */
+MENU IDM_TREE
+   {
+   MENUITEM "~Delete",    IDM_TREEDELETE
+   MENUITEM "™~ffnen...", IDM_TREEOPEN
+   }
+
+/* Hauptmenue */
+MENU IDM_EAEDITOR
+   {
+   SUBMENU "~Editieren", IDM_EDIT
+      {
+      MENUITEM "~Einklappen", IDM_EDITCOLLAPSE
+      MENUITEM "~Aufklappen", IDM_EDITEXPAND
+      }
+   }
+
+/* Applikationstexte */
+STRINGTABLE
+   {
+   IDS_ASCII,                "ASCII"
+   IDS_BINARY,               "Binary"
+   IDS_BITMAP,               "Bitmap"
+   IDS_DATE,                 "Datum"
+   IDS_EA,                   "EA"
+   IDS_EASIZE,               "EA Gr”áe"
+   IDS_FILENAME,             "Dateiname"
+   IDS_ICON,                 "Icon"
+   IDS_LOCALMAP,             "Lokale šbersicht"
+   IDS_METAFILE,             "Metafile"
+   IDS_MULTIVALUEMULTITYPE,  "Multi-value Multi-type"
+   IDS_MULTIVALUESINGLETYPE, "Multi-value Single-type"
+   IDS_PROGRAMM,             "EA Editor"
+   IDS_SIZE,                 "Gr”áe"
+   IDS_TIME,                 "Uhrzeit"
+   IDS_UNKNOWN,              "Unknown"
+   }
+
+

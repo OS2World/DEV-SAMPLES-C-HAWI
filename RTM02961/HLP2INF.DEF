@@ -1,0 +1,8 @@
+; $Header: D:/PROJEKTE/Kleine Helferlein!1/Source/rcs/HLP2INF.DEF 1.1 1995/11/28 13:12:29 HaWi Exp $
+
+NAME      HLP2INF WINDOWCOMPAT
+DATA      NONSHARED
+STACKSIZE 131068
+
+
+

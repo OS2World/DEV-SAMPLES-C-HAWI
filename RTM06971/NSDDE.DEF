@@ -1,0 +1,7 @@
+; $Header: D:\Projekte\Redaktion Toolbox\An der langen Leine\Source\RCS\NSDDE.DEF 1.0 1997/08/29 16:05:42 HAWI Exp $
+
+NAME      NSDDE WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE
+

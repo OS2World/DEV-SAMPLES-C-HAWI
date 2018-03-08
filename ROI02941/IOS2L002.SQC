@@ -1,0 +1,29 @@
+/* $Header: D:\projekte\gib mir die daten\source\RCS\IOS2L002.SQC 1.1 1995/05/25 15:49:18 HaWi Exp $ */
+
+#define  INCL_BASE
+#define  INCL_PM
+#include <os2.h>
+
+#include <sql.h>
+#include <sqlcodes.h>
+
+#include "IOS2L001.H"
+
+EXEC SQL INCLUDE sqlca;
+
+/* *******************************************************************
+   *** Function: IOS2L_CreateTable                                 ***
+   ******************************************************************* */
+ULONG IOS2L_CreateTable (VOID)
+   {
+   EXEC SQL WHENEVER SQLERROR goto DBError ;
+   EXEC SQL WHENEVER SQLWARNING goto DBError ;
+   EXEC SQL WHENEVER NOT FOUND goto DBError ;
+   EXEC SQL CREATE TABLE IOS2L
+                         (ULKEY  INT         NOT NULL,
+                          SZNAME VARCHAR(64) NOT NULL) ;
+   return IOS2L_NOERROR ;
+    DBError:
+   return IOS2L_ERROR ;
+   }
+   

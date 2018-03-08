@@ -1,0 +1,9 @@
+; $Header: D:/PROJEKTE/Die Programmierung des DB2!2/Source/rcs/DB2SPY.DEF 1.1 1995/12/11 11:48:49 HaWi Exp $
+
+NAME      DB2SPY WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE
+
+
+

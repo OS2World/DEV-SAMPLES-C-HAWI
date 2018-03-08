@@ -1,0 +1,8 @@
+; $Header: D:/Projekte/Tief im MLE!1/Source/rcs/MLE.DEF 1.1 1996/04/16 21:03:37 HaWi Exp $
+
+NAME      MLE WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE
+
+

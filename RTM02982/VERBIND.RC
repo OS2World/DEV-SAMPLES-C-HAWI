@@ -1,0 +1,30 @@
+/* $Header: D:\Projekte\Redaktion Toolbox\Verbindungen\Source\RCS\VERBIND.RC 1.1 1997/11/26 21:39:42 HAWI Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "VERBIND.H"
+
+DLGTEMPLATE IDD_VERBIND LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG  "Verbindungen", IDD_VERBIND, 10, 10, 314, 198, WS_VISIBLE, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+   PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      GROUPBOX        "Verbindungsart", 0, 8, 4, 120, 190
+      AUTORADIOBUTTON "Filter", IDR_V1, 12, 176, 100, 10, WS_GROUP
+      AUTORADIOBUTTON "Typ", IDR_V2, 12, 166, 100, 10
+      LISTBOX         IDL_V1, 12, 60, 100, 106, LS_HORZSCROLL
+      ENTRYFIELD      "", IDE_V1, 13, 24, 100, 8, ES_MARGIN
+      PUSHBUTTON      "HinzufÅgen", IDP_V1, 12, 8, 50, 14
+      PUSHBUTTON      "Lîschen", IDP_V2, 66, 8, 50, 14
+      GROUPBOX        "Verbindungen", 0, 132, 4, 174, 190
+      LISTBOX         IDL_V2, 136, 60, 154, 106, LS_HORZSCROLL
+      AUTORADIOBUTTON "Objekt", IDR_V3, 136, 48, 100, 10, WS_GROUP
+      AUTORADIOBUTTON "Programm", IDR_V4, 136, 36, 100, 10
+      COMBOBOX        "", IDC_V1, 137, -28, 154, 62, CBS_DROPDOWN | LS_HORZSCROLL
+      PUSHBUTTON      "HinzufÅgen", IDP_V3, 136, 8, 50, 14
+      PUSHBUTTON      "Lîschen", IDP_V4, 190, 8, 50, 14
+      PUSHBUTTON      "Standard", IDP_V5, 244, 8, 50, 14
+      }
+   }
+

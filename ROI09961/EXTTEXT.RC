@@ -1,0 +1,20 @@
+/* $Header: D:/Projekte/Hin und Her/Source/rcs/EXTTEXT.RC 1.1 1996/06/23 21:42:36 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "EXTTEXT.H"
+
+DLGTEMPLATE IDD LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Drag 'n Drop Beispiel", IDD, 0, 0, 166, 46, FS_DLGBORDER | FS_NOBYTEALIGN | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_SYNCPAINT | WS_VISIBLE, FCF_SYSMENU | FCF_TASKLIST | FCF_TITLEBAR
+      {
+      LTEXT         "Text 1:", 0, 8, 32, 60, 8
+      CONTROL       "", IDT_1, 70, 32, 80, 8, WCP_EXTTEXT, DT_BOTTOM | DT_LEFT | SS_TEXT | WS_GROUP | WS_VISIBLE
+      LTEXT         "Text 2:", 0, 8, 20, 60, 8
+      CONTROL       "", IDT_2, 70, 20, 80, 8, WCP_EXTTEXT, DT_BOTTOM | DT_LEFT | SS_TEXT | WS_GROUP | WS_VISIBLE
+      DEFPUSHBUTTON "Abbrechen", DID_CANCEL, 6, 4, 75, 14
+      }
+   }
+
+

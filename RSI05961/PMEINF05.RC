@@ -1,0 +1,49 @@
+/* $Header: D:/PROJEKTE/Fensterln mit OS!2!1/Source/rcs/PMEINF05.RC 1.1 1996/02/07 12:16:55 HaWi Exp $ */
+
+/* Presentation Manager Kopfdatei einbinden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Anwendungskopfdatei einbinden */
+#include "PMEINF05.H"
+
+/* Ressourcedefinition der Dialoge */
+DLGTEMPLATE IDD_DIALOGOEFFNEN LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG  "Dialog", IDD_DIALOGOEFFNEN, 92, 96, 360, 180, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      CONTAINER     IDCO_DO1, 8, 98, 172, 77, CCS_MINIRECORDCORE | CCS_READONLY | WS_GROUP | WS_VISIBLE
+      NOTEBOOK      IDNO_DO1, 180, 98, 172, 78, BKS_BACKPAGESBR | BKS_MAJORTABRIGHT | WS_GROUP | WS_VISIBLE
+      VALUESET      IDVS_DO1, 8, 20, 172, 78, VS_BORDER | VS_COLORINDEX | WS_GROUP | WS_VISIBLE
+         CTLDATA    8, 0, 2, 8
+      SLIDER        IDSL_DO1, 180, 70, 172, 20, SLS_BOTTOM | SLS_HOMELEFT | SLS_HORIZONTAL | SLS_SNAPTOINCREMENT | WS_GROUP | WS_VISIBLE
+         CTLDATA    12, 0, 10, 0, 10, 0
+      SPINBUTTON    IDSP_DO1, 180, 50, 172, 20, SPBS_FASTSPIN | SPBS_JUSTLEFT | SPBS_MASTER | SPBS_READONLY | NOT SPBS_SERVANT | WS_GROUP | WS_VISIBLE
+      LTEXT         "", IDT_DO1, 180, 20, 172, 20, WS_GROUP | WS_VISIBLE
+      DEFPUSHBUTTON "Ok", IDP_DO1, 4, 4, 60, 14, WS_GROUP | WS_VISIBLE
+      }
+   }
+
+/* Menuedefinition der Dialoge */
+MENU IDM_PMEINF05
+   {
+   SUBMENU "~Dialog", IDM_DIALOG
+      {
+      MENUITEM "™~ffnen", IDM_DIALOGOEFFNEN
+      }
+   SUBMENU "~Standarddialoge", IDM_STANDARDDIALOGE
+      {
+      MENUITEM "~Datei ”ffnen", IDM_STANDARDDIALOGEDATEIOEFFNEN
+      MENUITEM "~Farbauswahl",  IDM_STANDARDDIALOGEFARBAUSWAHL
+      }
+   }
+
+/* Tabelle mit Texten */
+STRINGTABLE
+   {
+   IDS_COLUMN1, "Spalte 1"
+   IDS_COLUMN2, "Spalte 2"
+   IDS_HEADER,  "Container šberschrift"
+   }
+
+

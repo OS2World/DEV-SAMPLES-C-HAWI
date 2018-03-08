@@ -1,0 +1,24 @@
+/* $Header: D:\projekte\klick und fallen lassen\source\RCS\IOS2P004.RC 1.1 1995/05/25 18:34:20 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "IOS2P004.H"
+#include "IOS2L004.H"
+
+DLGTEMPLATE IDD_IOS2P LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Drag 'n Drop Beispiel", IDD_IOS2P,    0,   0, 166, 46,
+          WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE |
+          FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR |
+          FCF_TASKLIST
+      {
+      LTEXT         "Eingabe 1:", 0,            8,  32,  60,   8
+      CONTROL       "",           IDE_IOS2P_1, 70,  32,  80,   8, WCP_IOS2L,
+          ES_MARGIN | ES_LEFT | ES_AUTOSCROLL | WS_TABSTOP | WS_VISIBLE
+      LTEXT         "Eingabe 2:", 0,            8,  20,  60,   8
+      CONTROL       "",           IDE_IOS2P_2, 70,  20,  80,   8, WCP_IOS2L,
+          ES_MARGIN | ES_LEFT | ES_AUTOSCROLL | WS_TABSTOP | WS_VISIBLE
+      DEFPUSHBUTTON "Abbrechen",  DID_CANCEL,   6,   4,  75,  14
+      }
+   }

@@ -1,0 +1,17 @@
+/* $Header: D:\projekte\fensterln mit os!2\source\RCS\PM02.RC 1.1 1995/05/25 15:33:05 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#define  _PM02_HLP
+#include "PM02.H"
+
+MENU IDM_PM02
+   {
+   SUBMENU "~Farbe", IDM_FARBE
+      {
+      MENUITEM "~Blau", IDM_FBLAU
+      MENUITEM "~GrÅn", IDM_FGRUEN
+      MENUITEM "~Rot",  IDM_FROT
+      }
+   }

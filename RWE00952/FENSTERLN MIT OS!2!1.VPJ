@@ -1,0 +1,11 @@
+
+[COMPILER]
+
+INCLUDEDIRS=%(INCLUDE)
+COMPILE=concur|capture,nmake %n.obj
+MAKE=concur|capture,nmake
+DEBUG=,ipmd [exename-here]
+USER1=concur|capture,nmake /A
+USER2=,dlgedit
+
+

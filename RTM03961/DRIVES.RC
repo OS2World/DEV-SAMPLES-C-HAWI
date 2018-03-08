@@ -1,0 +1,33 @@
+/* $Header: D:/Projekte/Kleine Helferlein!2/Source/rcs/DRIVES.RC 1.1 1996/03/05 18:04:09 HaWi Exp $ */
+
+/* Presentation Manager Kopfdatei */
+#define  INCL_PM
+#include <os2.h>
+
+/* Applikations Kopfdatei */
+#include "DRIVES.H"
+
+/* Dialog Definitionen */
+DLGTEMPLATE IDD_DD LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Dialog Drives", IDD_DD, 0, 0, 226, 134, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      /* Liste mit Drives */
+      LISTBOX       IDL_DD1, 12, 20, 100, 100
+      /* Liste mit Verzeichnissen */
+      LISTBOX       IDL_DD2, 114, 20, 100, 100
+      DEFPUSHBUTTON "Ok", DID_OK, 4, 4, 60, 14
+      }
+   }
+
+/* Menu Definitionen */
+MENU IDM_DRIVES
+   {
+   SUBMENU "~Dialog", IDM_DIALOG
+      {
+      MENUITEM "~Drives...", IDM_DIALOGDRIVES
+      }
+   }
+
+

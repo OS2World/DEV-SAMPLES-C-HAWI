@@ -1,0 +1,38 @@
+/* $Header: D:\projekte\fensterln mit os!2\source\RCS\PM04.RC 1.1 1995/05/25 15:34:59 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#define  _PM04_HLP
+#include "PM04.H"
+
+DLGTEMPLATE IDD_DOEFFNEN LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG  "Dialog", IDD_DOEFFNEN, 23, 41, 313, 171, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      GROUPBOX        "Auswahl 1", IDG_DO1, 2, 126, 300, 40
+      AUTORADIOBUTTON "Blau", IDR_DO1, 12, 148, 39, 10, WS_TABSTOP
+      AUTORADIOBUTTON "GrÅn", IDR_DO2, 12, 138, 39, 10, WS_TABSTOP
+      AUTORADIOBUTTON "Rot", IDR_DO3, 12, 128, 39, 10, WS_TABSTOP
+      LTEXT           "", IDT_DO1, 138, 148, 154, 8
+      GROUPBOX        "Auswahl 2", IDG_DO2, 2, 36, 118, 84
+      AUTOCHECKBOX    "Blau", IDH_DO1, 12, 102, 40, 10
+      AUTOCHECKBOX    "GrÅn", IDH_DO2, 12, 92, 40, 10
+      AUTOCHECKBOX    "Rot", IDH_DO3, 12, 82, 40, 10
+      LTEXT           "", IDT_DO2, 12, 66, 100, 8
+      GROUPBOX        "Auswahl 3", IDG_DO3, 130, 36, 172, 84
+      LISTBOX         IDL_DO1, 136, 60, 154, 40
+      ENTRYFIELD      "", IDE_DO1, 138, 48, 150, 8, ES_MARGIN
+      PUSHBUTTON      "Ok", DID_OK, 6, 4, 40, 14
+      PUSHBUTTON      "Cancel", DID_CANCEL, 49, 4, 40, 14
+      PUSHBUTTON      "Help", DID_HELP, 92, 4, 40, 14
+      }
+   }
+
+MENU IDM_PM04
+   {
+   SUBMENU "~Dialog", IDM_DIALOG
+      {
+      MENUITEM "~Oeffnen", IDM_DOEFFNEN
+      }
+   }

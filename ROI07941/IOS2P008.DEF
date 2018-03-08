@@ -1,0 +1,6 @@
+; $Header: D:\projekte\dde - das dicke ende\source\RCS\IOS2P008.DEF 1.1 1995/05/25 15:25:04 HaWi Exp $
+
+NAME        IOS2P008 WINDOWAPI
+DATA        NONSHARED 
+STACKSIZE   80000
+PROTMODE

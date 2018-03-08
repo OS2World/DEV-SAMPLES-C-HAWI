@@ -1,0 +1,36 @@
+/* $Header: D:\projekte\som!wps inside\source\RCS\HWITER.CPF 1.1 1995/05/25 18:53:28 HaWi Exp $ */
+
+#include "hwiter.rh"
+/* -------------------------------------------------------------------------------------------------------------------- */
+:userdoc.
+:title.Hilfe fÅr Terminklasse
+:body.
+/* -------------------------------------------------------------------------------------------------------------------- */
+:h1 res=29989.Applikation - Terminklasse
+:p.Das ist die Terminklasse
+/* -------------------------------------------------------------------------------------------------------------------- */
+:h1 res=30099.Notizbuchseiten
+/* -------------------------------------------------------------------------------------------------------------------- */
+:h2 res=IDD_Termin.Notizbuchseite - Termin
+:p.Die Terminseite.
+:h3 res=IDSP_Tag.Spinbutton - Tag
+:p.Der Tag.
+:h3 res=IDSP_Monat.Spinbutton - Monat
+:p.Der Monat.
+:h3 res=IDSP_Jahr.Spinbutton - Jahr
+:p.Das Jahr.
+:h3 res=IDSP_Stunde.Spinbutton - Stunde
+:p.Die Stunde.
+:h3 res=IDSP_Minute.Spinbutton - Minute
+:p.Die Minute.
+:h3 res=30102.Pushbutton - Hilfe
+:p.Die Hilfe.
+/* -------------------------------------------------------------------------------------------------------------------- */
+:h2 res=IDD_Bemerkung.Notizbuchseite - Comment
+:p.Die Kommentarseite.
+:h3 res=IDF_Bemerkung.MLE Feld - Kommentar
+:p.Der Kommentar.
+:h3 res=30112.Pushbutton - Hilfe
+:p.Die Hilfe.
+/* -------------------------------------------------------------------------------------------------------------------- */
+:euserdoc.

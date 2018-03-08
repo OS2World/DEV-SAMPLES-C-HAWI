@@ -1,0 +1,49 @@
+/* $Header: D:/PROJEKTE/Kleine Helferlein/Source/rcs/HELPER.RC 1.3 1995/11/03 13:25:20 HaWi Exp $ */
+
+/* Konstanten des Presentation Manager laden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Konstanten der Anwendung laden */
+#include "HELPER.H"
+
+/* Ein Dialog */
+DLGTEMPLATE IDD_DIALOG1 LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Helper Example", IDD_DIALOG1, 0, 0, 132, 40, WS_CLIPSIBLINGS | WS_SAVEBITS | WS_SYNCPAINT | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      /* Mit Kontrolldaten (Pushbuttons und Entryfields):
+         3 == Drei Pushbuttons in einer Reihe
+         1 == Ein Entryfield */
+      CTLDATA (TPUSHBUTTONS + TENTRYFIELDS), 3, IDP_DIALOG11,
+                                                IDP_DIALOG12,
+                                                IDP_DIALOG13,
+                                             1, IDE_DIALOG11, 10
+      /* Mit globalen Presentation Parametern */
+      PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      {
+      ENTRYFIELD    "",       IDE_DIALOG11, 6, 24, 118,  8, ES_MARGIN
+      DEFPUSHBUTTON "Ok",     IDP_DIALOG11, 6,  4,   0, 14, WS_GROUP
+      PUSHBUTTON    "Cancel", IDP_DIALOG12, 0,  4,   0, 14
+      PUSHBUTTON    "Help",   IDP_DIALOG13, 0,  4,   0, 14
+      }
+   }
+
+/* MenÅ der Anwendung */
+MENU IDM_HELPER
+   {
+   SUBMENU "~Dialoge", IDM_DIALOGE
+      {
+      MENUITEM "~Dialog 1...", IDM_DIALOG1
+      MENUITEM "ô~ffnen...", IDM_OEFFNEN
+      }
+   }
+
+/* Anwendungstexte */
+STRINGTABLE
+   {
+   IDS_BEENDEN,                  "Beenden"
+   IDS_WOLLENSIEWIRKLICHBEENDEN, "Wollen Sie wirklich beenden?"
+   }
+
+
+

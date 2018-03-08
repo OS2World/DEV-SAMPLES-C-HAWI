@@ -1,0 +1,21 @@
+/* $Header: D:/Projekte/Hin und Her/Source/rcs/DROPTEST.RC 1.1 1996/06/23 21:42:35 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "DROPTEST.H"
+
+STRINGTABLE
+   {
+   IDS_CONTAINERB,      "Container = "
+   IDS_DROPOBJECTSHERE, "Drop objects here"
+   IDS_OBJECTB,         "Object "
+   IDS_PROGRAMM,        "Drop Spy"
+   IDS_RMFB,            "RMF = "
+   IDS_SOURCEB,         "Source = "
+   IDS_STATUSBAR,       "Drag and Drop messages"
+   IDS_TARGETB,         "Target = "
+   IDS_TYPEB,           "Type = "
+   }
+
+

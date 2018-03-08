@@ -1,0 +1,30 @@
+/* $Header: D:\projekte\gib mir die daten\source\RCS\IOS2P001.RC 1.1 1995/05/25 15:49:46 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "IOS2P001.H"
+
+DLGTEMPLATE IDD_IOS2P LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "DB2/2 Beispiel",     IDD_IOS2P,    0,   0, 166, 182,
+          WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE |
+          FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR |
+          FCF_TASKLIST
+      {
+      LTEXT      "Laufwerk",   0,            8, 168,  60,   8
+      ENTRYFIELD "C",          IDE_IOS2P_2, 70, 168,  80,   8, ES_MARGIN
+      LTEXT      "Anzahl",     0,            8, 156,  60,   8
+      LTEXT      "0",          IDT_IOS2P_1, 70, 156,  80,   8
+      LTEXT      "SchlÅssel",  0,            8, 144,  60,   8
+      LISTBOX                  IDL_IOS2P_1, 70,  68,  80,  80
+      LTEXT      "Name",       0,            8,  56,  60,   8
+      ENTRYFIELD "",           IDE_IOS2P_1, 70,  56,  80,   8, ES_MARGIN
+      PUSHBUTTON "Abbrechen",  DID_CANCEL,   6,  36,  75,  14
+      PUSHBUTTON "EinfÅgen",   IDP_IOS2P_1, 85,  36,  75,  14
+      PUSHBUTTON "Lîschen",    IDP_IOS2P_2,  6,  20,  75,  14
+      PUSHBUTTON "éndern",     IDP_IOS2P_3, 85,  20,  75,  14
+      PUSHBUTTON "DB Anlegen", IDP_IOS2P_4,  6,   4,  75,  14
+      PUSHBUTTON "DB Lîschen", IDP_IOS2P_5, 85,   4,  75,  14
+      }
+   }

@@ -1,0 +1,51 @@
+/* $Header: D:\projekte\som!wps inside\source\RCS\HWITER.RC 1.1 1995/05/25 18:53:50 HaWi Exp $ */
+
+#include "hwiter.ih"
+#include "hwiter.rh"
+
+POINTER IDN_Termin hwiter.ico
+
+DLGTEMPLATE IDD_Termin LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG  "", IDD_Termin, 0, 0, 0, 0, WS_VISIBLE | NOT FS_DLGBORDER | NOT WS_SAVEBITS
+      {
+      LTEXT           "Datum", 0, 0, 126, 40, 8, DT_MNEMONIC
+      SPINBUTTON      IDSP_Tag, 32, 126, 27, 12, SPBS_SERVANT | SPBS_NUMERICONLY | SPBS_JUSTRIGHT | SPBS_FASTSPIN | WS_GROUP
+      CTEXT           "", IDT_DatumDelimiter1, 59, 127, 6, 8
+      SPINBUTTON      IDSP_Monat, 65, 126, 27, 12, SPBS_SERVANT | SPBS_NUMERICONLY | SPBS_JUSTRIGHT | SPBS_FASTSPIN | WS_GROUP
+      CTEXT           "", IDT_DatumDelimiter2, 92, 127, 6, 8
+      SPINBUTTON      IDSP_Jahr, 98, 126, 37, 12, SPBS_MASTER | NOT SPBS_SERVANT | SPBS_NUMERICONLY | SPBS_JUSTRIGHT | SPBS_FASTSPIN | WS_GROUP
+      LTEXT           "", IDT_DatumDelimiter3, 144, 126, 80, 8
+      LTEXT           "Uhrzeit", 0, 0, 114, 40, 8, DT_MNEMONIC
+      SPINBUTTON      IDSP_Stunde, 65, 114, 27, 12, SPBS_SERVANT | SPBS_NUMERICONLY | SPBS_JUSTRIGHT | SPBS_FASTSPIN | WS_GROUP
+      CTEXT           "", IDT_UhrzeitDelimiter1, 92, 115, 6, 8
+      SPINBUTTON      IDSP_Minute, 98, 114, 37, 12, SPBS_MASTER | NOT SPBS_SERVANT | SPBS_NUMERICONLY | SPBS_JUSTRIGHT | SPBS_FASTSPIN | WS_GROUP
+      LTEXT           "", IDT_UhrzeitDelimiter2, 144, 114, 80, 8
+      PUSHBUTTON      "Hilfe", DID_HELP, 0, 4, 60, 14, BS_NOPOINTERFOCUS | BS_HELP
+      }
+   }
+
+DLGTEMPLATE IDD_Bemerkung LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG  "", IDD_Bemerkung, 0, 0, 0, 0, WS_VISIBLE | NOT FS_DLGBORDER | NOT WS_SAVEBITS
+      {
+      MLE             "", IDF_Bemerkung, 0, 22, 190, 112, MLS_BORDER | MLS_WORDWRAP | MLS_HSCROLL | MLS_VSCROLL | MLS_DISABLEUNDO | MLS_IGNORETAB
+      PUSHBUTTON      "Hilfe", DID_HELP, 0, 4, 60, 14, BS_NOPOINTERFOCUS | BS_HELP
+      }
+   }
+
+HELPSUBTABLE IDD_Termin
+   {
+   HELPSUBITEM IDSP_Tag,    IDSP_Tag
+   HELPSUBITEM IDSP_Monat,  IDSP_Monat
+   HELPSUBITEM IDSP_Jahr,   IDSP_Jahr
+   HELPSUBITEM IDSP_Stunde, IDSP_Stunde
+   HELPSUBITEM IDSP_Minute, IDSP_Minute
+   HELPSUBITEM DID_HELP,    DID_HELP
+   }
+
+HELPSUBTABLE IDD_Bemerkung
+   {
+   HELPSUBITEM IDF_Bemerkung, IDF_Bemerkung
+   HELPSUBITEM DID_HELP,      DID_HELP
+   }

@@ -1,0 +1,25 @@
+/* $Header: D:\projekte\kuchengrafik unter os!2\source\RCS\CAKETEST.RC 1.1 1995/05/25 18:46:36 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "CAKETEST.H"
+#include "CAKE.H"
+
+DLGTEMPLATE IDD LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Cake Example", IDD, 0, 0, 132, 130, WS_CLIPSIBLINGS | WS_SAVEBITS | WS_SYNCPAINT | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      {
+      CONTROL         "",        IDT_1,  12,  72, 108,  46, CK_CLASSNAME, WS_VISIBLE | WS_GROUP
+         PRESPARAMS PP_FONTNAMESIZE, "8.Helv"
+      LTEXT           "Count",   0,      12,  60,  40,   8
+      LTEXT           "",        IDT_2,  60,  60,  32,   8
+      LTEXT           "~Index:", 0,      12,  48,  40,   8, DT_MNEMONIC
+      ENTRYFIELD      "",        IDE_1,  60,  48,  60,   8, ES_MARGIN
+      LTEXT           "~Value:", 0,      12,  36,  40,   8, DT_MNEMONIC
+      ENTRYFIELD      "",        IDE_2,  60,  36,  60,   8, ES_MARGIN
+      LTEXT           "~Title:", 0,      12,  24,  40,   8, DT_MNEMONIC
+      ENTRYFIELD      "",        IDE_3,  60,  24,  60,   8, ES_MARGIN
+      DEFPUSHBUTTON   "~Change", IDP_1,   6,   4, 120,  14, WS_GROUP
+      }
+   }

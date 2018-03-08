@@ -1,0 +1,2231 @@
+<!doctype html public "-//IETF//DTD HTML//EN">
+<HTML>
+
+<HEAD>
+
+<TITLE>WebExplorer View Window API</TITLE>
+
+<META NAME="AUTHOR" CONTENT="Don Boulia and Sandee Settle">
+</HEAD>
+
+<BODY>
+
+<H1>WebExplorer Developer's Toolkit View Window API</H1>
+
+<H2>Contents</H2>
+
+<P>
+This file includes information about:
+<UL>
+<LI><a href="#CreateWindow">How to create a WebExplorer View window</a>
+<LI><a href="#DeleteWindow">How to delete a WebExplorer View window</a>
+<LI><a href="#StrucDef">Structure definitions</a>
+</UL>
+
+<P>
+In addition the API functions are defined in the follow categories:
+<UL>
+<LI>Functions that perform actions
+<UL>
+<li><a href="#WXViewLoad">Initiate the loading of a document</a> (WXViewLoad)
+<li><a href="#WXViewLoadToFile">Initiate loading of a document directly to a file</a> (WXViewLoadToFile)
+<li><a href="#WXViewPrint">Print the contents of the document currently active in the window</a> (WXViewPrint)
+<li><a href="#WXViewCancelLoad">Cancel the loading of the previous document</a> (WXViewCancelLoad)
+<li><a href="#WXViewEnableGateway">Request current settings for proxy and socks servers</a>(WXViewEnableGateway)
+</ul>
+<LI>Document-related functions
+<ul>
+<li><a href="#WXViewIsLoading">Determine if a document is currently being loaded</a> (WXViewIsLoading)
+<li><a href="#WXViewQueryDocTitle">Request the current document title to a buffer</a> (WXViewQueryDocTitle)
+<li><a href="#WXViewQueryDocTitleLen">Request the length of the current document title</a> (WXViewQueryDocTitleLen)
+<li><a href="#WXViewQueryDocAnchor">Request the anchor of the current document to a buffer</a> (WXViewQueryDocAnchor)
+<li><a href="#WXViewQueryDocAnchorLen">Request the length of the current document's anchor string</a> (WXViewQueryDocAnchorLen)
+<li><a href="#WXViewSearch">Search the current document in the specified direction</a> (WXViewSearch)
+</ul>
+<LI>Position-related functions
+<ul>
+<li><a href="#WXViewQueryAnchor">Put the necessary data for a specific anchor in an anchor buffer</a> (WXViewQueryAnchor)
+<li><a href="#WXViewQueryAnchorLen">Request the length of the anchor</a> (WXViewQueryAnchorLen)
+<li><a href="#WXViewQueryAnchorData">Put the necessary data for a specific anchor in a caller-supplied buffer</a> (WXViewQueryAnchorData)
+<li><a href="#WXViewQueryAnchorDataLen">Request the length of the anchor data for an anchor in the anchor buffer</a> (WXViewQueryAnchorDataLen)
+<li><a href="#WXViewQueryPos">Take mouse coordinates and map them to a position in the current document</a> (WXViewQueryPos)
+</ul>
+<LI>Functions that perform configuration queries
+<ul>
+<li><a href="#WXViewQueryCacheOpts">Request the current cache options settings</a>(WXViewQueryCacheOpts)
+<li><a href="#WXViewQueryDisplayOpts">Request the current display options settings</a>(WXViewQueryDisplayOpts)
+<li><a href="#WXViewQueryExtMap">Request the mapping currently in place</a>(WXViewQueryExtMap)
+<li><a href="#WXViewQueryNetworkOpts">Request the current network options settings</a>(WXViewQueryNetworkOpts)
+<li><a href="#WXViewQueryPointer">Request the pointer currently installed for each of the various pointer types used</a>(WXViewQueryPointer)
+<li><a href="#WXViewQueryVersion">Request the version number of the currently loaded webxwin.dll</a> (WXViewQueryVersion)
+<li><a href="#WXViewQueryViewer">Request the current settings for the specified MIME type</a> (WXViewQueryViewer)
+</ul>
+<LI>Functions that perform configuration assignments
+<ul>
+<li><a href="#WXViewSetCacheOpts">Set cache options</a> (WXViewSetCacheOpts)
+<li><a href="#WXViewSetDisplayOpts">Set display options</a> (WXViewSetDisplayOpts)
+<li><a href="#WXViewSetExtMap">Set the external viewer for the specified MIME type pair</a> (WXViewSetExtMap)
+<li><a href="#WXViewSetNetworkOpts">Set network options</a> (WXViewSetNetworkOpts)
+<li><a href="#WXViewSetPointer">Install new pointer for the view window</a> (WXViewSetPointer)
+<li><a href="#WXViewSetViewer">Set the program associated with a MIME type pair</a> (WXViewSetViewer)
+</ul>
+<LI>Other miscellaneous functions
+<ul>
+<li><a href="#WXViewQueryLastError">Request the last error code set for this view window</a> (WXViewQueryLastError)
+<li><a href="#WXViewQueryLastLoadError">Request the load error for this view window</a> (WXViewQueryLastLoadError)
+<li><a href="#WXViewQueryAnchorState">Query the view window's current representation of the specified anchor</a> (WXViewQueryAnchorState)
+<li><a href="#WXViewSetAnchorState">Update the view window's representation of the specified anchor</a> (WXViewSetAnchorState)
+</ul>
+<LI>Window messages
+<ul>
+<li><a href="#WX_BUTTONCLICK">Occurs when one of the mouse pointer buttons is pressed while within the view window</a> (WX_BUTTONCLICK)
+<li><a href="#WX_LOADRESULT">Occurs when a load operation has completed</a> (WX_LOADRESULT)
+<li><a href="#WX_LOADSTATUS">Occurs when a load is in progress to indicate the status of the document</a> (WX_LOADSTATUS)
+<li><a href="#WX_MOUSEMOVE">Occurs when the mouse has been moved with the view window</a> (WX_MOUSEMOVE)
+<li><a href="#WX_PRINTRESULT">Occurs when printing of the current window has completed</a> (WX_PRINTRESULT)
+</ul>
+</ul>
+
+<h2><a name="CreateWindow">Creating a WebExplorer View window</a></h2>
+Creation of a view window is accomplished by
+calling the <i>WinCreateWindow</i> PM API call.
+The following information should be provided to <i>WinCreateWindow</i>:
+<dl>
+<dt>WC_WXVIEW
+<dd>This is the class name for the View window class. This class is
+registered automatically when an application accesses the WEBXWIN DLL.
+<dt>PWXINITDATA
+<dd>A pointer to a <a href="#WXINITDATA">WXINITDATA</a> structure can be
+passed in the <i>pCtlData</i> (user-defined data) field of the WinCreateWindow
+call. This provides a mechanism for initializing the view with specific
+values rather than the normal defaults. This parameter is optional;
+if it is NULL the window will be created with appropriate defaults.
+</dl>
+
+<h2><a name="DeleteWindow">Deleting a WebExplorer View window</a></h2>
+Resources for the view window are deallocated when the caller issues the
+PM <i>WinDestroyWindow</i> API call. After this call is made, any further API
+calls made for the view window are undefined.
+
+<h2><a name="StrucDef">Structure Definitions</a></h2>
+<hr>
+<a name="WXINITDATA">
+<i>typedef struct</i> <b>_wxINITDATA</b> {
+</a>
+<xmp>
+    USHORT usThreads ;                      /* number of img loading threads */
+    BOOL bPaletteMgmt ;                     /* palette mgmt on or off? */
+
+</xmp>
+} <b>WXINITDATA</b> ;<br>
+<i>typedef WXINITDATA</i> <b>*PWXINITDATA</b> ;<br>
+
+<p>
+<a name="WXCACHEOPTS">
+<i>typedef struct</i> <b>_wxCACHEOPTS</b> {
+</a>
+<xmp>
+    BOOL bEnabled ;                        /* enable, disable cacheing */
+    BOOL bMemoryImageCacheing;             /* keep cached images in memory */
+    LONG lDocLimit ;                       /* number of docs to cache */
+    LONG lImageLimit ;                     /* number of images to cache */
+    CHAR szCacheDir[WXMEDSTRING] ;         /* default is TMP environ. var */
+
+</xmp>
+ } <b>WXCACHEOPTS</b> ;<br>
+<i>typedef WXCACHEOPTS</i> <b>*PWXCACHEOPTS</b> ;<br>
+
+<p>
+<a name="WXFONTSIZE">
+<i>typedef enum</i> <b>_wxFONTSIZE</b> {
+</a>
+<xmp>
+    WXFONT_SMALL,
+    WXFONT_NORMAL,
+    WXFONT_LARGE,
+    WXFONT_XLARGE
+
+</xmp>
+ } <b>WXFONTSIZE</b> ;<br>
+
+<p>
+<a name="WXDISPLAYOPTS">
+<i>typedef struct</i> <b>_wxDISPLAYOPTS</b> {
+</a>
+<xmp>
+    CHAR szFontName[ WXSMALLSTRING ] ;
+    WXFONTSIZE wxFontSize ;
+    BOOL bUnderlineAnchors ;               /* use underline text for links */
+
+    LONG lClrText ;                        /* text color */
+    LONG lClrAnchor ;                      /* link color */
+    LONG lClrVisitedAnchor ;               /* seen link color */
+    LONG lClrBackground ;                  /* bg view color */
+
+    BOOL bInlineGraphics ;                 /* show inline images? */
+    BOOL bFastLoad ;                       /* load document ahead of images? */
+    BOOL bStreamingGraphics ;              /* scanline-at-a-time redraw? */
+    BOOL bFancyInterlace ;                 /* blur the ilaced GIF? */
+
+    BOOL bInternalViewer ;                 /* view standalone imgs in view? */
+    BOOL bIgnoreImgErrors ;                /* No red "X" over failed imgs? */
+
+</xmp>
+ } <b>WXDISPLAYOPTS</b> ;<br>
+<i>typedef WXDISPLAYOPTS</i> <b>*PWXDISPLAYOPTS</b> ;<br>
+
+<p>
+<a name="WXGATEWAY">
+<i>typedef ULONG</i> <b>WXGATEWAY</b> ;<br>
+</a>
+<xmp>
+#define WXGATEWAY_NONE          0
+#define WXGATEWAY_PROXY         1          /* gateway flags can be OR'ed */
+#define WXGATEWAY_SOCKS         2
+</xmp>
+
+<p>
+<a name="WXNETWORKOPTS">
+<i>typedef struct</i> <b>_wxNETWORKOPTS</b> {
+</a>
+<xmp>
+    CHAR szEmailAddress[ WXLARGESTRING ] ;    /* user@host smtp style address */
+    CHAR szNewsServer[ WXLARGESTRING ] ;      /* news hostname/ip address */
+
+    WXGATEWAY wxGateway ;                     /* proxy or socks server state */
+    CHAR szHTTPProxyServer[ WXLARGESTRING ] ; /* proxy gw (http://..) */
+    CHAR szSocksServer[ WXLARGESTRING ] ;     /* socks gw hostname/ip address */
+
+</xmp>
+ } <b>WXNETWORKOPTS</b> ;<br>
+<i>typedef WXNETWORKOPTS</i> <b>*PWXNETWORKOPTS</b> ;<br>
+<p>
+
+<a name="WXVIEWER">
+<i>typedef struct</i> <b>_wxVIEWER</b> {
+</a>
+<xmp>
+    CHAR  szMIMEType[ WXMEDSTRING ] ;       /* MIME type to be viewed */
+    CHAR  szProgram[ WXLARGESTRING ] ;      /* program to use as a viewer */
+
+</xmp>
+ } <b>WXVIEWER</b> ;<br>
+<i>typedef WXVIEWER</i> <b>*PWXVIEWER</b> ;<br>
+<p>
+
+<a name="WXDATAFORMAT">
+<i>typedef enum</i> <b>_wxDATAFORMAT</b> {
+</a>
+<xmp>
+    WXFORMAT_BINARY=0,
+    WXFORMAT_7BIT,
+    WXFORMAT_8BIT
+
+</xmp>
+ } <b>WXDATAFORMAT</b> ;<br>
+<p>
+
+<a name="WXEXTMAP">
+<i>typedef enum</i> <b>_wxEXTMAP</b> {
+</a>
+<xmp>
+    CHAR szExtension[ WXMEDSTRING ] ;      /* extension to be mapped */
+    CHAR szMIMEType[ WXMEDSTRING ] ;       /* MIME type to assign to this ext */
+    WXDATAFORMAT wxFormat ;                /* binary, 7bit, etc. */
+
+</xmp>
+ } <b>WXEXTMAP</b> ;<br>
+<i>typedef WXEXTMAP</i> <b>*PWXEXTMAP</b> ;<br>
+<p>
+
+<xmp>
+#define WXANCHOR_DEFAULT 0                 /* can be OR'ed together */
+#define WXANCHOR_VISITED 1
+</xmp>
+<p>
+
+<a name="WXSEARCHOPTS">
+<i>typedef enum</i> <b>_wxSEARCHOPTS</b> {
+</a>
+<xmp>
+    WXSEARCH_FORWARD=0,
+    WXSEARCH_BACKWARD
+
+</xmp>
+ } <b>WXSEARCHOPTS</b> ;<br>
+<p>
+
+<a name="WXPOINTERTYPE">
+<i>typedef enum</i> <b>_wxPOINTERTYPE</b> {
+</a>
+<xmp>
+    WXPOINTER_NORMAL=0,
+    WXPOINTER_ANCHOR,
+    WXPOINTER_WAIT
+
+</xmp>
+ } <b>WXPOINTERTYPE</b> ;<br>
+<p>
+
+<a name="WXPOS">
+<i>typedef struct</i> <b>_wxPOS</b> {
+</a>
+<xmp>
+    ULONG  ulComponent ;
+    USHORT x ;
+    USHORT y ;
+
+</xmp>
+ } <b>WXPOS</b> ;<br>
+<i>typedef WXPOS</i> <b>*PWXPOS</b> ;<br>
+<p>
+
+<a name="WXMOUSEDATA">
+<i>typedef struct</i> <b>_wxMOUSEDATA</b> {
+</a>
+<xmp>
+    USHORT x ;
+    USHORT y ;
+    USHORT uswHitTest ;
+    USHORT fsFlags ;
+
+</xmp>
+ } <b>WXMOUSEDATA</b> ;<br>
+<i>typedef WXMOUSEDATA</i> <b>*PWXMOUSEDATA</b> ;<br>
+<p>
+
+<a name="WXBUTTONDATA">
+<i>typedef struct</i> <b>_wxBUTTONDATA</b> {
+</a>
+<xmp>
+    USHORT usButtonNum ;
+    USHORT usClickNum ;
+    SHORT x ;
+    SHORT y ;
+    USHORT fsHitTestRes ;
+    USHORT fsFlags ;
+
+</xmp>
+ } <b>WXBUTTONDATA</b> ;<br>
+<i>typedef WXBUTTONDATA</i> <b>*PWXBUTTONDATA</b> ;<br>
+<p>
+
+<a name="WXTHREADDATA">
+<i>typedef struct</i> <b>_wxTHREADDATA</b> {
+</a>
+<xmp>
+    WXFLAGS wxflState ;
+    ULONG ulProgressCount ;
+    ULONG ulProgressLimit ;
+
+</xmp>
+ } <b>WXTHREADDATA</b> ;<br>
+<i>typedef WXTHREADDATA</i> <b>*PWXTHREADDATA</b> ;<br>
+<p>
+
+<a name="WXPRINTINFO">
+<i>typedef struct</i> <b>_wxPRINTINFO</b> {
+</a>
+<xmp>
+    PDRIVDATA pDriverData ;
+    PCSZ pszDriverName ;
+    PCSZ pszQueueName ;
+    PCSZ pszQueueDesc ;
+    UINT nCopies ;
+
+</xmp>
+ } <b>WXPRINTINFO</b> ;<br>
+<i>typedef WXPRINTINFO</i> <b>*PWXPRINTINFO</b> ;<br>
+<p>
+
+<h2>API Functions</h2>
+<h3>Core View Functions</h3>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr>
+<p>
+<b>USHORT APIENTRY <a name="WXViewQueryVersion">WXViewQueryVersion</a> (
+VOID
+</b>
+<b>);</b>
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+The <b>WXViewQueryVersion</b> API call can be made at any time to request
+the version number of the currently loaded WEBXWIN DLL. The high byte of
+the return value is the major version number, the low byte is the minor
+version number.
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+      USHORT usVersion ;
+
+      usVersion = WXViewQueryVersion( ) ;
+      if ( usVersion == 0x0102 ) {
+        /* version 1.02 loaded */
+      } else if ( usVersion == 0x0110 ) {
+        /* version 1.10 loaded */
+      } /* endif */
+
+</xmp>
+
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewLoad">WXViewLoad</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PCSZ
+</b><i>
+pcszURL
+</i><b>,
+WXFLAGS
+</b><i>
+wxLoadFlags
+</i><b>,
+PWXANCHORDATA
+</b><i>
+pwxAnchorData
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pcszURL</i>
+<dd>A zero terminated string pointing to the <i>fully qualified</i> URL to load
+<dt><i>wxLoadFlags</i>
+<dd>Loading options. These flags can be combined with the logical OR operator.
+Valid Flags are:
+  <blockquote>
+  <b>WXLOAD_ANCHOR</b> :<br>
+  Load a URL. <br>
+  <b>WXLOAD_FORCERELOAD</b> :<br>
+  Reload the document from its source rather than using the cached
+  version of the document.<br>
+  </blockquote>
+<dt><i>pwxAnchorData</i>
+<dd>Pointer to load data. The type of data pointed to by this parameter
+is specific to the type of load requested. The
+<a href="#WXViewQueryAnchorData>WXViewQueryAnchorData</a> API call can
+be used to determine the anchor data associated with a given anchor within
+the document. This parameter can be set to NULL if no additional anchor
+data is necessary to load this URL.
+(see <i>wxLoadFlags</i>)
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewLoad</b> should be used to initiate loading of a document. Note that this
+function returns immediately. When the document loading is complete,
+the results are sent to the parent window via the
+<a href="#WXMESSAGES">WX_LOADRESULT</a> window message.
+<p>
+This call will fail if a previous load operation is still in progress
+for this view window.
+In this case the function will return immediately with a value of <b>WX_ERROR</b>.
+<a href="WXViewQueryLastError">WXViewQueryLastError</a> can then be called to retrieve the last
+error for this view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEINPROGRESS
+<dd>A previous call to WXViewLoad is still pending on this view window.
+</dl>
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      HWND hwndView ; /* assume this was set via WinCreateWindow */
+      char szURL[] = "http://www.ibm.com" ;
+
+      if ( WXViewLoad( hwndView, szURL, WX_DEFAULT ) == WX_SUCCESS ) {
+        /* parent window will now be posted with WX_LOADRESULT when this
+         * operation completes
+         */
+      } /* endif */
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewLoadToFile">WXViewLoadToFile</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PCSZ
+</b><i>
+pcszURL
+</i><b>,
+PCSZ
+</b><i>
+pcszFileName
+</i><b>,
+WXFLAGS
+</b><i>
+wxLoadFlags
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pcszURL</i>
+<dd>A zero terminated string pointing to the URL to load
+<dt><i>pcszFileName</i>
+<dd>A zero terminated string pointing to the file name in which the desired
+URL's contents will be copied.
+<dt><i>wxLoadFlags</i>
+<dd>Loading options. See <a href="#WXViewLoad">WXViewLoad</a> for a list of
+valid loading options.
+<dt><i>pwxAnchorData</i>
+<dd>Pointer to load data. The type of data pointed to by this parameter
+is specific to the type of load requested.
+(see <i>wxLoadFlags</i>)
+</dl>
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewLoadToFile</b> should be used to initiate loading of a document
+directly to a file. Note that this
+function returns immediately. When the document loading is complete,
+the results are posted to the parent window via the
+<a href="#WXMESSAGES">WX_LOADRESULT</a> window message.
+<p>
+This call will fail if a previous load operation is still in progress
+for this view window.
+In this case the function will return immediately with a value of <b>WX_ERROR</b>.
+<a href="#WXViewQueryLastError">WXViewQueryLastError</a> can then be called to retrieve the last
+error for this view window.
+<p>
+As in the case of <a href="#WXViewLoad">WXViewLoad</a>, if the current
+document is contained in the cache in an acceptable format, the cached
+version will be used. The WX_FORCERELOAD flag will override any cache settings
+and retrieve the document from its source.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEFILE
+<dd>The file name could not be opened for writing.
+<dt>WXEINPROGRESS
+<dd>A previous call to WXViewLoadToFile or <a href="#WXViewLoad">WXViewLoad</a>
+is still pending on this view window.
+</dl>
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      HWND hwndView ; /* assume this was set via WinCreateWindow */
+      char szURL[] = "http://www.ibm.com" ;
+      char szFileName = "c:\\temp\\temp.htm" ;
+
+      if ( WXViewLoadToFile( hwndView,
+                             szURL,
+                             szFileName,
+                             WX_DEFAULT ) == WX_SUCCESS )
+      {
+        /* parent window will now be posted with WX_LOADRESULT when this
+         * operation completes
+         */
+      } /* endif */
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewPrint">WXViewPrint</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PWXPRINTINFO
+</b><i>
+pPrintInfo
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pPrintInfo</i>
+<dd>Pointer to a <a href="#WXPRINTINFO">WXPRINTINFO</a>
+data structure for the desired printing options.
+<dt><i>usLen</i>
+<dd>Length of <i>pPrintInfo</i>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewPrint</b> is used to print the contents of the document currently
+active in the view. There must be a valid, loaded document in the view
+window in order to print.
+<p>
+Note that this function will return immediately after initiating
+the print request, and a
+<a href="#WX_PRINTRESULT">WX_PRINTRESULT</a> message will be sent to the owner
+window when the printing operation completes.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENODOC
+<dd>There is no document currently loaded in this view window.
+<dt>WXEINPROGRESS
+<dd>A document is currently being loaded in this view window.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewCancelLoad">WXViewCancelLoad</a> (
+HWND
+</b><i>
+hwndView
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewCancelLoad</b> will cancel the loading of the previous document.
+Note that the loading operation is not considered complete until the
+<a href="#WXMESSAGES">WX_LOADRESULT</a>
+message has been sent to the parent window. Therefore, in order to cancel a
+loading operation and begin another load, the application must issue the
+<b>WXViewCancelLoad</b> call
+and then wait for the WX_LOADRESULT message to be posted before issuing another
+<a href="#WXViewLoad">WXViewLoad</a> API call.
+<p>
+This call will fail if there is no load operation currently in progress.
+In this case the function will return immediately with a value of <b>WX_ERROR</b>.
+<a href="WXViewQueryLastError">WXViewQueryLastError</a> can then be called to retrieve the last
+error for this view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>The view window handle is not valid.
+<dt>WXENODOC
+<dd>No document loading operation is currently in progress for this view window.
+</dl>
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      HWND hwndView ; /* assume this was set via WinCreateWindow */
+
+      if ( WXViewCancelLoad( hwndView ) == WX_SUCCESS ) {
+        /* parent window will now be posted with WX_LOADRESULT when this
+         * operation completes
+         */
+      } /* endif */
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>BOOL APIENTRY <a name="WXViewIsLoading">WXViewIsLoading</a> (
+HWND
+</b><i>
+hwndView
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewIsLoading</b> should be used to determine if a document is
+currently being loaded.
+<p>
+This function returns TRUE if a document is currently being loaded in
+the view window as a result of a previous
+<a href="#WXViewLoad>WXViewLoad</a>
+or
+<a href="#WXViewLoad>WXViewLoadToFile</a>
+API call. FALSE is returned if no document is currently being loaded
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryPos">WXViewQueryPos</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+USHORT
+</b><i>
+x
+</i><b>,
+USHORT
+</b><i>
+y
+</i><b>,
+<a href="#WXPOS">PWXPOS</a>
+</b><i>
+pwxPos
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>x</i>
+<dd>the horizontal coordinate of the mouse position
+<dt><i>y</i>
+<dd>the vertical coordinate of the mouse position
+<dt><i>pwxPos</i>
+<dd>A pointer to a position structure which will be set to the document position that
+the given lMousePos corresponds to.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryPos</b> is designed to take mouse coordinates such as those passed in the
+<a href="#WXMESSAGES">WX_BUTTONCLICK</a>
+and <a href="#WXMESSAGES">WX_MOUSEMOVE</a> messages and map them to a position in
+the current document. This position indicator can then be used in other API functions
+to query the contents of the document at that location.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEINPROGRESS
+<dd>A previous call to WXViewLoad is still pending on this view window.
+</dl>
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+     /* assume a window procedure here;
+      * mp1 is the first parameter in the window message call.
+      * hwndView has been previously initialize via WinCreateWindow...
+      */
+      case WX_BUTTONCLICK :
+      {
+        PWXBUTTONDATA pwxBData = (PWXBUTTONDATA)mp2 ;
+        WXPOS wxPos ;
+
+        WXViewQueryPos( hwndView, pwxBData->x, pwxBData->y, &wxPos ) ;
+
+           /* ... do something with wxPos here ... */
+      }
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryAnchor">WXViewQueryAnchor</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXPOS">PWXPOS</a>
+</b><i>
+pwxPos
+</i><b>,
+PSZ
+</b><i>
+pszAnchor
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxPos</i>
+<dd>A pointer to a position structure initialized by a call to
+<a href="#WXViewQueryPos">WXViewQueryPos</a>.
+<dt><i>pszAnchor</i>
+<dd>A character buffer which will hold the anchor found at pwxPos
+<dt><i>usLen</i>
+<dd>Length of pszAnchor
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryAnchor</b> will fill pszAnchor with the desired data for
+the anchor found at pwxPos.
+
+If the returned string is greater than
+or equal to usLen bytes, the returned value is a truncated version of
+the anchor and the error code for the view window is set to
+WXEBUFSIZE.
+
+<p>
+This call will fail if pwxPos does not point to a valid component
+of the document. In this case the function will return WX_ERROR and
+the <a href="#WXViewQueryLastError">WXViewQueryLastError</a> function can be called to
+determine the specific error.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENOANCHOR
+<dd>No anchor was found at this position
+<dt>WXEBUFSIZE
+<dd>The buffer size given was not large enough to hold the entire anchor.
+</dl>
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      #define BUFSZ 256
+
+      APIRET retErr ;
+
+     /* assume a window procedure here;
+      * mp1 is the first parameter in the window message call.
+      * hwndView has been previously initialized via WinCreateWindow...
+      */
+      case WX_BUTTONCLICK :
+      {
+        PWXBUTTONDATA pwxBData = (PWXBUTTONDATA)mp2 ;
+        WXPOS wxPos ;
+        char szAnchor[BUFSZ];
+
+        if ( WXViewQueryPos( hwndView, pwxBData->x, pwxBData->y, &wxPos ) == WX_SUCCESS ) {
+          if ( WXViewQueryAnchor( hwndView, &wxPos, szAnchor, BUFSZ ) == WX_SUCCESS ) {
+
+             /* ... do something with the anchor here ... */
+          } else {
+             retErr = WXViewQueryLastError( hwndView ) ;
+          } /* endif */
+        } else {
+           retErr = WXViewQueryLastError( hwndView ) ;
+        } /* endif */
+      }
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>USHORT APIENTRY <a name="WXViewQueryAnchorLen">WXViewQueryAnchorLen</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXPOS">PWXPOS</a>
+</b><i>
+pwxPos
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxPos</i>
+<dd>A pointer to a position structure initialized by a call to
+<a href="#WXViewQueryPos">WXViewQueryPos</a>.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryAnchorLen</b> returns the length of the anchor which
+resides at <i>pwxPos</i>
+The current anchor's text or address can be obtained by calling
+<a href="#WXViewQueryAnchor">WXViewQueryAnchor</a>
+
+<p>
+This call will fail if there is no document currently active in the
+view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENODOC
+<dd>No document is currently loaded in the view window.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryAnchorData">WXViewQueryAnchorData</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXPOS">PWXPOS</a>
+</b><i>
+pwxPos
+</i><b>,
+PWXANCHORDATA
+</b><i>
+pwxAnchorData
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxPos</i>
+<dd>A pointer to a position structure initialized by a call to
+<a href="#WXViewQueryPos">WXViewQueryPos</a>.
+<dt><i>pwxAnchorData</i>
+<dd>A caller-supplied buffer which will hold the anchor data found at pwxPos
+<dt><i>usLen</i>
+<dd>Length of pwxAnchorData
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryAnchorData</b> will fill pwxAnchorData with the desired data for
+the anchor found at pwxPos. Typically
+<a href="#WXViewQueryAnchorDataLen>WXViewQueryAnchorDataLen</a> will be
+called to calculate the size of the buffer needed for the call to
+WXViewQueryAnchorData.
+
+<p>
+This call will fail if pwxPos does not point to a valid component
+of the document. In this case the function will return WX_ERROR and
+the <a href="#WXViewQueryLastError">WXViewQueryLastError</a> function can be called to
+determine the specific error.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENOANCHOR
+<dd>No anchor was found at this position
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>USHORT APIENTRY <a name="WXViewQueryAnchorDataLen">WXViewQueryAnchorDataLen</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXPOS">PWXPOS</a>
+</b><i>
+pwxPos
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxPos</i>
+<dd>A pointer to a position structure initialized by a call to
+<a href="#WXViewQueryPos">WXViewQueryPos</a>.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryAnchorDataLen</b> returns the length of the anchor data
+for the anchor which resides at <i>pwxPos</i>
+The current anchor's data can be obtained by calling
+<a href="#WXViewQueryAnchorData">WXViewQueryAnchorData</a>
+
+<p>
+This call will fail if there is no document currently active in the
+view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENODOC
+<dd>No document is currently loaded in the view window.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryDocTitle">WXViewQueryDocTitle</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PSZ
+</b><i>
+pszTitle
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pszTitle</i>
+<dd>A character buffer which will hold the current document title
+<dt><i>usLen</i>
+<dd>Length of pszTitle
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryDocTitle</b> will fill pszTitle with the
+current document title. If the title string is greater than
+or equal to usLen bytes, the returned value is a truncated version of
+the title and the error code for the view window is set to
+WXEBUFSIZE.
+
+<p>
+This call will fail if there is no document currently active in the
+view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEBUFSIZE
+<dd>The buffer size given was not large enough to hold the entire title string.
+<dt>WXENODOC
+<dd>No document is currently loaded in the view window.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>USHORT APIENTRY <a name="WXViewQueryDocTitleLen">WXViewQueryDocTitleLen</a> (
+HWND
+</b><i>
+hwndView
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryDocTitleLen</b> return the length of the current document
+title.
+The current title string can be obtained by calling
+<a href="#WXViewQueryDocTitle">WXViewQueryDocTitle</a>
+
+<p>
+This call will fail if there is no document currently active in the
+view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENODOC
+<dd>No document is currently loaded in the view window.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryDocAnchor">WXViewQueryDocAnchor</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PSZ
+</b><i>
+pszAnchor
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pszAnchor</i>
+<dd>A character buffer which will hold the anchor of the currently loaded
+document
+<dt><i>usLen</i>
+<dd>Length of pszAnchor
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryDocAnchor</b> will fill pszAnchor with the
+anchor of the current document. If the anchor string is greater than
+or equal to usLen bytes, the returned value is a truncated version of
+the anchor and the error code for the view window is set to
+WXEBUFSIZE.
+
+<p>
+This call will fail if there is no document currently active in the
+view window. In this case, WX_ERROR is returned and
+<a href="#WXViewQueryLastError">WXViewQueryLastError</a>
+may be called to retrieve the last error for this view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEBUFSIZE
+<dd>The buffer size given was not large enough to hold the entire title string.
+<dt>WXENODOC
+<dd>No document is currently loaded in the view window.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>USHORT APIENTRY <a name="WXViewQueryDocAnchorLen">WXViewQueryDocAnchorLen</a> (
+HWND
+</b><i>
+hwndView
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryDocAnchorLen</b> returns the length of the current document's
+anchor string.
+The current anchor can be obtained by calling
+<a href="#WXViewQueryDocAnchor">WXViewQueryDocAnchor</a>
+
+<p>
+This call will fail if there is no document currently active in the
+view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENODOC
+<dd>No document is currently loaded in the view window.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewSearch">WXViewSearch</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+WXSEARCHOPTS
+</b><i>
+wxSearchOpts
+</i><b>,
+PWXPOS
+</b><i>
+pwxStartPos
+</i><b>,
+PWXPOS
+</b><i>
+pwxNextPos
+</i><b>,
+PCSZ
+</b><i>
+pcszSearchData
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>wxSearchOpts</i>
+<dd>Indicates the type of search to be performed. It may be one of:
+  <blockquote>
+  <b>WXSEARCH_FORWARD</b> :<br>
+  Begin the search starting at <i>pwxStartPos</i> and moving forward.<br>
+
+  <b>WXSEARCH_BACKWARD</b> :<br>
+  Begin the search starting at <i>pwxStartPos</i> and moving backward.<br>
+  </blockquote>
+<dt><i>pwxStartPos</i>
+<dd>Starting position to begin the search from.
+<dt><i>pwxNextPos</i>
+<dd>Upon successful return from the function, pwxNextPos will be filled
+with the position information of the search data.
+<dt><i>pcszSearchData</i>
+<dd>String to search for in the document
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewSearch</b> will search the current document for
+<i>pcszSearchData</i> in the direction specified by <i>wxSearchOpts</i>.
+If <i>pwxStartPos</i> is NULL, the search begins from the top of the
+document (for WXSEARCH_FORWARD) or bottom of the document (for
+WXSEARCH_BACKWARD).
+
+<p>
+If the search string is not found in the document given the search criteria,
+the function fails with WX_ERROR and
+<a href="#WXViewQueryLastError">WXViewQueryLastError</a>
+will hold WXENOTFOUND. Note that it may be useful for some applications
+to check specifically for this error code since it can be used to
+indicate when a search operation must "wrap" to the top or bottom
+fo the document.
+
+<p>
+This call will fail if there is no document currently active in the
+view window.
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENOTFOUND
+<dd>The search string was not found in the document.
+<dt>WXENODOC
+<dd>No document is currently loaded in the view window.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewSetAnchorState">WXViewSetAnchorState</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PCSZ
+</b><i>
+pcszAnchor
+</i><b>,
+WXFLAGS
+</b><i>
+wxAnchorOpts
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pcszAnchor</i>
+<dd>A string which holds the anchor to set the state for.
+<dt><i>wxAnchorOpts</i>
+<dd>New state for this anchor. It can be one of:
+  <blockquote>
+  <b>WXANCHOR_DEFAULT</b> :<br>
+  Reset this anchor to its default state.<br>
+  <b>WXANCHOR_VISITED</b> :<br>
+  Mark this anchor as visited.<br>
+  </blockquote>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewSetAnchorState</b> will update the view window's representation
+of the specified anchor. The most obvious effect of this is the color
+used to represent "visited" anchors in the view differs from that
+of anchors which have not been visited.
+<p>
+The <a href=#WXViewQueryAnchorState>WXViewQueryAnchorState</a> API call
+can be used to find the anchor's current state.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryAnchorState">WXViewQueryAnchorState</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PCSZ
+</b><i>
+pcszAnchor
+</i><b>,
+PWXFLAGS
+</b><i>
+pwxAnchorOpts
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>pcszAnchor</i>
+<dd>A string which holds the anchor to set the state for.
+<dt><i>pwxAnchorOpts</i>
+<dd>Upon successful completion of this function, <i>pwxAnchorOpts</i> will
+hold the current state of the specified anchor. For a list of valid
+states, see the
+<a href="#WXViewSetAnchorState">WXViewSetAnchorState</a>
+function.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryAnchorState</b> will query the view window's
+current representation of the specified anchor.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryLastError">WXViewQueryLastError</a> (
+HWND
+</b><i>
+hwndView
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryLastError</b> will return the last error code set for this view window, or
+WXENONE if no error is present on this view window. <i>hwndView</i> must be a
+valid window handle initialized by <i>WinCreateWindow</i>,
+otherwise behavior of this function is undefined.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXENONE
+<dd>The last API call completed successfully
+<dt><i>Other</i>
+<dd>API specific error code returned. See the description of the API function
+for an explanation of this error.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      HWND hwndView ; /* assume this was set via WinCreateWindow */
+      APIRET retErr ;
+
+      retErr = WXViewQueryLastError( hwndView ) ;
+
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryLastLoadError">WXViewQueryLastLoadError</a> (
+HWND
+</b><i>
+hwndView
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryLastLoadError</b> will return the load error
+for this view window. This value is reset whenever a new load
+operation is initiated. If the last load operation completed
+successfully, WXENONE is returned.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXENONE
+<dd>The last API call completed successfully
+<dt><i>Other</i>
+<dd>API specific error code returned. See the description of the API function
+for an explanation of this error.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>HPOINTER APIENTRY <a name="WXViewQueryPointer">WXViewQueryPointer</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+WXPOINTERTYPE
+</b><i>
+wxPointerType
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>wxPointerType</i>
+<dd>The type of view pointer to query. It can be one of the following:
+  <blockquote>
+  <b>WXPOINTER_NORMAL</b> :<br>
+  The default pointer when the pointer is in the view window.<br>
+  <b>WXPOINTER_ANCHOR</b> :<br>
+  The pointer used when over an anchor in the view window.<br>
+  <b>WXPOINTER_WAIT</b> :<br>
+  The pointer used when the view window is not accepting input.<br>
+  </blockquote>
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryPointer</b> returns the pointer currently installed
+for each of the various pointer types used by the view window.
+The pointer returned by this function should not be deleted as
+it is currently in use by the view window.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewSetPointer">WXViewSetPointer</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+WXPOINTERTYPE
+</b><i>
+wxPointerType
+</i><b>,
+HPOINTER
+</b><i>
+hPointer
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>A view window obtained by calling <i>WinCreateWindow</i>
+<dt><i>wxPointerType</i>
+<dd>The type of view pointer to query. See
+<a href=#WXViewQueryPointer>WXViewQueryPointer</a>
+for a list of possible pointer types.
+<dt><i>hPointer</i>
+<dd>Handle of the new pointer to install.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewSetPointer</b> installs <i>hPointer</i> for the view window
+pointer identified by <i>wxPointerType</i>. Once installed, this pointer
+is used by the view window and therefore must not be deleted. In order
+to safely delete the pointer, another call to
+<b>WXViewSetPointer</b> must be made in order
+to replace the currently installed pointer.
+
+<p>
+Note that you can restore the view window's default pointer types by
+specifying a <b>NULLHANDLE</b> for <i>hPointer</i>.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<h3>Configuration Functions</h3>
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryCacheOpts">WXViewQueryCacheOpts</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXCACHEOPTS">PWXCACHEOPTS</a>
+</b><i>
+pwxCacheOpts
+</i><b>,
+USHORT
+</b><i>
+usSize
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxCacheOpts</i>
+<dd>Pointer to a
+<a href="#WXCACHEOPTS">WXCACHEOPTS</a>
+structure. Upon successful completion of this function, the structure
+is loaded with the current cache settings.
+<dt><i>usSize</i>
+<dd>Size of the structure pointed to by pwxCacheOpts
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewSetCacheOpts">WXViewSetCacheOpts</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXCACHEOPTS">PWXCACHEOPTS</a>
+</b><i>
+pwxCacheOpts
+</i><b>,
+USHORT
+</b><i>
+usSize
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxCacheOpts</i>
+<dd>Pointer to a
+<a href="#WXCACHEOPTS">WXCACHEOPTS</a>
+structure. This structure is loaded with the desired settings before calling the
+function. Upon successful completion, the new settings are in effect.
+<dt><i>usSize</i>
+<dd>Size of the structure pointed to by pwxCacheOpts
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryDisplayOpts">WXViewQueryDisplayOpts</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXDISPLAYOPTS">PWXDISPLAYOPTS</a>
+</b><i>
+pwxDisplayOpts
+</i><b>,
+USHORT
+</b><i>
+usSize
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxDisplayOpts</i>
+<dd>Pointer to a
+<a href="#WXDISPLAYOPTS">WXDISPLAYOPTS</a>
+structure. Upon successful completion of this function, the structure
+is loaded with the current cache settings.
+<dt><i>usSize</i>
+<dd>Size of the structure pointed to by pwxDisplayOpts
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewSetDisplayOpts">WXViewSetDisplayOpts</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXDISPLAYOPTS">PWXDISPLAYOPTS</a>
+</b><i>
+pwxDisplayOpts
+</i><b>,
+USHORT
+</b><i>
+usSize
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxDisplayOpts</i>
+<dd>Pointer to a
+<a href="#WXDISPLAYOPTS">WXDISPLAYOPTS</a>
+structure. This structure is loaded with the desired settings before calling the
+function. Upon successful completion, the new settings are in effect.
+<dt><i>usSize</i>
+<dd>Size of the structure pointed to by pwxDisplayOpts
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryNetworkOpts">WXViewQueryNetworkOpts</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXNETWORKOPTS">PWXNETWORKOPTS</a>
+</b><i>
+pwxNetworkOpts
+</i><b>,
+USHORT
+</b><i>
+usSize
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxNetworkOpts</i>
+<dd>Pointer to a
+<a href="#WXNETWORKOPTS">WXNETWORKOPTS</a>
+structure. Upon successful completion of this function, the structure
+is loaded with the current cache settings.
+<dt><i>usSize</i>
+<dd>Size of the structure pointed to by pwxNetworkOpts
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewSetNetworkOpts">WXViewSetNetworkOpts</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+<a href="#WXNETWORKOPTS">PWXNETWORKOPTS</a>
+</b><i>
+pwxNetworkOpts
+</i><b>,
+USHORT
+</b><i>
+usSize
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxNetworkOpts</i>
+<dd>Pointer to a
+<a href="#WXNETWORKOPTS">WXNETWORKOPTS</a>
+structure. This structure is loaded with the desired settings before calling the
+function. Upon successful completion, the new settings are in effect.
+<dt><i>usSize</i>
+<dd>Size of the structure pointed to by pwxNetworkOpts
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENOPROXY
+<dd>The proxy gateway was specified as enabled, but no valid proxy server
+was supplied.
+<dt>WXENOSOCKS
+<dd>The socks gateway was specified as enabled, but no valid socks server
+was supplied.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewEnableGateway">WXViewEnableGateway</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+WXGATEWAY
+</b><i>
+wxGateway
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>wxGateway</i>
+<dd>Holds the desired gateway setting. Upon successful
+completion of this function, the gateway setting is in effect.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+wxGateway can be one of the following values. Settings can be combined using
+the logical OR operator (|) to acheive the desired combination:
+<dl>
+<dt><b>WXGATEWAY_PROXY</b>
+<dd>Use a socks gateway. Only valid if the gateway has been defined correctly via
+calling the <a href="#WXViewSetNetworkOpts">WXViewSetNetworkOpts</a> function.
+<dt><b>WXGATEWAY_SOCKS</b>
+<dd>Use a socks gateway. Only valid if the gateway has been defined correctly via
+calling the <a href="#WXViewSetNetworkOpts">WXViewSetNetworkOpts</a> function.
+<dt><b>WXGATEWAY_NONE</b>
+<dd>Use neither a socks or proxy gateway
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXENOPROXY
+<dd>A valid proxy server is not currently defined
+<dt>WXENOSOCKS
+<dd>A valid socks server is not currently defined
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryViewer">WXViewQueryViewer</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PCSZ
+</b><i>
+pcszMIMEType
+</i><b>,
+PWXVIEWER
+</b><i>
+pwxViewer
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pcszMIMEType</i>
+<dd>String which holds the MIME type to query.
+<dt><i>pwxViewer</i>
+<dd>Pointer to an viewer structure which will hold the values for
+the given MIME type upon return.
+<dt><i>usLen</i>
+<dd>Length of the <a href="#WXVIEWER">WXVIEWER</a> structure
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryViewer</b> will return the viewer currently registered for
+the given MIME type pair. External viewers can be set or removed by using the
+<a href="#WXViewSetViewer">WXViewSetViewer</a> API call.
+<p>
+Note that <b>WXViewQueryViewer</b> will return WX_ERROR if there is no viewer
+currently registered for this MIME type.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEMIME
+<dd>The syntax for the MIME type pair is invalid.
+<dt>WXENOTFOUND
+<dd>No viewer is currently registered for the requested MIME type.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      HWND hwndView ; /* assume this was set via WinCreateWindow */
+      APIRET retErr ;
+      WXVIEWER wxViewer ;
+
+      retErr = WXViewQueryViewer( hwndView,
+                                  "application/pdf",
+                                  &wxViewer,
+                                  sizeof(WXVIEWER) ) ;
+
+      if ( retErr != WX_SUCCESS ) {
+         if ( WXViewQueryLastError( hwndView ) == WXENOTFOUND ) {
+           /* no viewer registered for this MIME type */
+         } else {
+           /* handle other errors here */
+         } /* endif */
+      } /* endif */
+
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewSetViewer">WXViewSetViewer</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PWXVIEWER
+</b><i>
+pwxViewer
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxViewer</i>
+<dd>Pointer to a structure filled with the external viewer data to set
+<dt><i>usLen</i>
+<dd>Length of the <a href="#WXVIEWER">WXVIEWER</a> structure
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewSetViewer</b> will set the external viewer for the MIME type pair
+specified. Any previous setting for this MIME type will be replaced. The
+current viewer setting can be obtained by calling
+<a href="#WXViewQueryViewer">WXViewQueryViewer</a>.
+<p>
+Note that several of the image MIME types can conflict with the
+<a href="#WXDISPLAYOPTS">bInternalViewer</a> display option. If this flag is
+set to TRUE, the View window space will be used to view the images
+internally regardless of the setting for the external viewer. Setting this
+option to FALSE will cause the external viewer to be used for the relevant
+MIME types if viewers have been appropriately registered. The following MIME
+types are affected by the internal viewers display option:
+<ul>
+<li>image/gif
+<li>image/jpeg
+<li>image/x-xbitmap
+<li>image/bmp
+</ul>
+<p>
+If the call completes without an error, WX_SUCESS is returned, otherwise
+WX_ERROR is returned and
+<a href="#WXViewQueryLastError">WXViewQueryLastError</a>
+can be used to obtain the specific error code.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEMIME
+<dd>The syntax for the MIME type pair is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      HWND hwndView ; /* assume this was set via WinCreateWindow */
+      APIRET retErr ;
+      WXVIEWER wxViewer ;
+
+      strcpy( wxViewer.szMIMEType, "application/pdf" );
+      strcpy( wxViewer.szProgram, "c:\\apps\\acroread.exe" );
+
+      retErr = WXViewSetViewer( hwndView, &wxViewer, sizeof( WXVIEWER) ) ;
+
+      if ( retErr != WX_SUCCESS ) {
+        /* handle errors here */
+      } /* endif */
+
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewQueryExtMap">WXViewQueryExtMap</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PCSZ
+</b><i>
+pcszExtension
+</i><b>,
+PWXEXTMAP
+</b><i>
+pwxExtMap
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pcszExtension</i>
+<dd>String which holds the extension to query.
+<dt><i>pwxExtMap</i>
+<dd>Pointer to an extension map structure which will hold the values for
+the given extension upon return.
+<dt><i>usLen</i>
+<dd>Length of the <a href="#WXEXTMAP">WXEXTMAP</a> structure
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewQueryExtMap</b> will return the mapping currently in place for
+<i>pcszExtension</i>. Upon successful return, <i>pwxExtMap</i> will be set
+with the appropriate mapping for this extension.
+<p>
+Note that <b>WXViewQueryExtMap</b> will return WX_ERROR if there is no mapping
+currently registered for this MIME type.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEMIME
+<dd>The syntax for the MIME type pair is invalid.
+<dt>WXENOTFOUND
+<dd>No mapping currently exists for this extension
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      HWND hwndView ; /* assume this was set via WinCreateWindow */
+      APIRET retErr ;
+      WXEXTMAP wxExtMap ;
+
+      retErr = WXViewQueryExtMap( hwndView,
+                                  "application/pdf",
+                                  &wxExtMap,
+                                  sizeof(WXEXTMAP) ) ;
+
+      if ( retErr != WX_SUCCESS ) {
+         if ( WXViewQueryLastError( hwndView ) == WXENOTFOUND ) {
+           /* no extension mapping for this MIME type */
+         } else {
+           /* handle other errors here */
+         } /* endif */
+      } /* endif */
+
+</xmp>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<p>
+<b>APIRET APIENTRY <a name="WXViewSetExtMap">WXViewSetExtMap</a> (
+HWND
+</b><i>
+hwndView
+</i><b>,
+PWXEXTMAP
+</b><i>
+pwxExtMap
+</i><b>,
+USHORT
+</b><i>
+usLen
+</i>
+<b>);</b>
+<dl>
+<dt><i>hwndView</i>
+<dd>Window handle obtained by calling <i>WinCreateWindow</i>
+<dt><i>pwxExtMap</i>
+<dd>Pointer to a structure filled with the extension map data to set
+<dt><i>usLen</i>
+<dd>Length of the <a href="#WXEXTMAP">WXEXTMAP</a> structure
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+<b>WXViewSetExtMap</b> will set the external viewer for the MIME type pair
+specified within <i>pwxExtMap</i>. Any previous mapping for this
+extension will be replaced. The current extension mapping can be obtained
+by calling <a href="#WXViewQueryExtMap">WXViewQueryExtMap</a>.
+<p>
+Setting the <a href="#WXEXTMAP">szMIMEType</a> member to the empty string
+effectively removes the mapping for this extension.
+<p>
+If the call completes without an error, WX_SUCESS is returned, otherwise
+WX_ERROR is returned and
+<a href="#WXViewQueryLastError">WXViewQueryLastError</a>
+can be used to obtain the specific error code.
+
+<!-- ------------------------------------------------------- -->
+<h5>Error Codes:</h5>
+<dl>
+<dt>WXEINVAL
+<dd>One of the parameters passed to the function is invalid.
+<dt>WXEMIME
+<dd>The syntax for the MIME type pair is invalid.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<h5>Example:</h5>
+<xmp>
+
+      HWND hwndView ; /* assume this was set via WinCreateWindow */
+      APIRET retErr ;
+      WXEXTMAP wxExtMap ;
+
+      strcpy( wxExtMap.szExtension, "pdf" ) ;
+      strcpy( wxExtMap.szMIMEType, "application/pdf" ) ;
+      wxExtMap.wxFormat     = WXFORMAT_BINARY ;
+
+      retErr = WXViewSetExtMap( hwndView, &wxExtMap, sizeof(WXEXTMAP) ) ;
+
+      if ( retErr != WX_SUCCESS ) {
+        /* handle errors here */
+      } /* endif */
+
+</xmp>
+
+<!-- ---------   WINDOW MESSAGES   ------------------------- -->
+<h3><a name="WXMESSAGES">Window Messages</a></h3>
+<hr>
+The window messages listed below are passed to the parent window
+when the given event occurs.
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<a name="WX_MOUSEMOVE">
+<h4>WX_MOUSEMOVE</h4>
+</a>
+This message is passed to the parent as the mouse is moved
+within the view window.
+
+<dl>
+<dt><i>mp1</i>
+<dd><b>HWND</b> Window handle of the view window which sent this message
+<dt><i>mp2</i>
+<dd><b>PWXMOUSEDATA</b> Pointer to a
+<a href="#WXMOUSEDATA">WXMOUSEDATA</a> structure.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<a name="WX_BUTTONCLICK">
+<h4>WX_BUTTONCLICK</h4>
+</a>
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+This message is passed to the parent window when one of the mouse
+pointer buttons is pressed while within the view window.
+<dl>
+<dt><i>mp1</i>
+<dd><b>HWND</b> Window handle of the view window which sent this message
+<dt><i>mp2</i>
+<dd><b>PWXBUTTONDATA</b> Pointer to a
+<a href="#WXBUTTONDATA">WXBUTTONDATA</a> structure.
+</dl>
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<a name="WX_LOADRESULT">
+<h4>WX_LOADRESULT</h4>
+</a>
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+This message is sent to the parent window when a load operation
+initiated by <a href="#WXViewLoad">WXViewLoad</a> completes.
+Note that this message does not necessarily indicate successful
+completion. This message is also sent when a call to
+<a href="#WXViewCancelLoad">WXViewCancelLoad</a> causes a
+load operation to stop prematurely.
+
+<dl>
+<dt><i>mp1</i>
+<dd><b>HWND</b> Window handle of the view window which sent this message
+<dt><i>mp2</i>
+<dd><b>WXFLAGS</b> Holds the result of the load operation. It can take one of the
+following values:
+<dt><dd><b>WX_SUCCESS</b>
+<dt><dd><b>WX_CANCELLED</b>
+<dt><dd><b>WX_ERROR</b>
+</dl>
+
+<p>
+In the event of an error,
+<a href="#WXViewQueryLastLoadError">WXViewQueryLastLoadError</a>
+can be called to get the specific error which occurred during
+the load operation.
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<a name="WX_PRINTRESULT">
+<h4>WX_PRINTRESULT</h4>
+</a>
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+This message is sent to the parent window when the printing
+of the current document initiated by
+<a href="#WXViewPrint">WXViewPrint</a>
+completes.
+Note that this message does not necessarily indicate successful
+completion. <i>mp2</i> will hold the general result of the last print
+operation. <a href="#WXViewQueryLastLoadError">WXViewQueryLastLoadError</a>
+can be called to find the specific error code.
+
+<dl>
+<dt><i>mp1</i>
+<dd><b>HWND</b> Window handle of the view window which sent this message
+<dt><i>mp2</i>
+<dd><b>WXFLAGS</b> Holds the result of the print operation. It can take one of the
+following values:
+<dt><dd><b>WX_SUCCESS</b>
+<dt><dd><b>WX_CANCELLED</b>
+<dt><dd><b>WX_ERROR</b>
+</dl>
+
+<p>
+In the event of an error,
+<a href="#WXViewQueryLastLoadError">WXViewQueryLastLoadError</a>
+can be called to get the specific error which occurred during
+the print operation.
+
+<!-- ------------------------------------------------------- -->
+<!-- ------------------------------------------------------- -->
+<hr width="50%" align=left>
+<a name="WX_LOADSTATUS">
+<h4>WX_LOADSTATUS</h4>
+</a>
+<!-- ------------------------------------------------------- -->
+<h5>Remarks:</h5>
+This message will be sent while a load is in progress to
+indicate the status of the document, formatting and image loading
+threads. This is intended to allow the parent to update
+progress indicators, etc. which may change as the document is
+loaded.
+
+<dl>
+<dt><i>mp1</i>
+<dd><b>HWND</b> Window handle of the view window which sent this message
+<dt><i>mp2</i>
+<dd><b>PWXTHREADDATA</b> Pointer to an array of WXTHREADDATA structures.
+</dl>
+
+<p>
+The following indexes into PWXTHREADDATA array are defined:
+<dl>
+<dt>WXTHDIDX_DOC
+<dd>Refers to the document loading thread
+<dt>WXTHDIDX_FMT
+<dd>Refers to document formatting thread
+<dt>WXTHDIDX_IMG1 through WXTHDIDX_IMG8
+<dd>Refers to each of the possible loader threads. Note that some of these
+values may be undefined depending on the number of threads initially requested
+via the <a href=#WXINITDATA>WXINITDATA</a> structure. For example, if only
+four image loading threads were defined (which is the default), then
+WXTHDIDX_IMG5 through WXTHDIDX_IMG8 would be irrelevant
+since those threads are not defined for this view window.
+</dl>
+
+<p>
+The <a href="#WXTHREADDATA">wxflState</a> flag of the WXTHREADDATA structure
+indicates the current state of this thread. The following states are
+defined:
+<dl>
+<dt>WXTHREAD_IDLE
+<dd>For loader threads, this state indicates that no load operation is
+currently in progress. For the format thread, this means that an initial
+format or reformat is not in progress.
+<dt>WXTHREAD_CONNECT
+<dd>This state is only valid for loader threads. It indicates that a
+connection to a remote host in currently in progress on this thread.
+<dt>WXTHREAD_WAIT
+<dd>This state is only valid for loader threads. It indicates that a
+connection has been established and the thread is waiting for data
+to be sent.
+<dt>WXTHREAD_DATA
+<dd>This state indicates that the thread is currently processing data.
+In this case, the ulProgressCount and ulProgressLimit data members will
+contain the amount of data which has currently been processed.
+<dt>WXTHREAD_RENDER
+<dd>This state is only valid on image loading threads. It is not used
+when streaming images are enabled, since images are rendered during the
+WXTHREAD_DATA state. For graphics that are not streamed, the render state
+is used to indicate that all image data has arrived and is being processed
+before display on the output device.
+</dl>

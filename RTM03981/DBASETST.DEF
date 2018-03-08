@@ -1,0 +1,7 @@
+; $Header: D:\Projekte\Redaktion Toolbox\Eingeschleust\Source\RCS\DBASETST.DEF 1.1 1998/01/17 22:12:03 HAWI Exp $
+
+NAME      DBASETST WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+PROTMODE
+

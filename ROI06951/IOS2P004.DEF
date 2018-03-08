@@ -1,0 +1,6 @@
+; $Header: D:\projekte\klick und fallen lassen\source\RCS\IOS2P004.DEF 1.1 1995/05/25 18:34:07 HaWi Exp $
+
+NAME        IOS2P004 WINDOWAPI
+DATA        NONSHARED 
+STACKSIZE   131068
+PROTMODE

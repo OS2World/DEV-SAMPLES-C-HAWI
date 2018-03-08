@@ -1,0 +1,34 @@
+/* $Header: D:\projekte\gib mir die daten.1\source\RCS\DB222.SQC 1.1 1995/05/25 15:53:22 HaWi Exp $ */
+
+#define  INCL_BASE
+#define  INCL_PM
+#include <os2.h>
+
+#include <sql.h>
+#include <sqlcodes.h>
+
+#include "DB22.H"
+
+EXEC SQL INCLUDE sqlca;
+
+/* Anlegen der Tabellen mu· in einem eigenem Modul stehen (fÅr das Binden beim Anlegen der Datenbank */
+ULONG CreateTables (VOID)
+   {
+   EXEC SQL WHENEVER SQLERROR goto DBError ;
+   EXEC SQL WHENEVER SQLWARNING goto DBError ;
+   EXEC SQL WHENEVER NOT FOUND goto DBError ;
+   EXEC SQL CREATE TABLE ADR
+                         (ULKEY     INT         NOT NULL,
+                          SZNAME    VARCHAR(64) NOT NULL,
+                          SZVORNAME VARCHAR(64) NOT NULL,
+                          SZTELEFON VARCHAR(64) NOT NULL) ;
+   EXEC SQL CREATE TABLE ANS
+                         (ULKEY     INT         NOT NULL,
+                          SZNAME    VARCHAR(64) NOT NULL,
+                          SZVORNAME VARCHAR(64) NOT NULL,
+                          SZTELEFON VARCHAR(64) NOT NULL) ;
+   return DBC_NOERROR ;
+    DBError:
+   return DBC_ERROR ;
+   }
+   

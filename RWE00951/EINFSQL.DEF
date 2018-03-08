@@ -1,0 +1,6 @@
+; $Header: D:\projekte\einfach sql\source\RCS\EINFSQL.DEF 1.1 1995/05/25 15:29:49 HaWi Exp $
+
+NAME        EINFSQL WINDOWAPI
+DATA        NONSHARED 
+STACKSIZE   80000
+PROTMODE

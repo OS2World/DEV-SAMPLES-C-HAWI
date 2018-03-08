@@ -1,0 +1,7 @@
+; $Header: D:/projekte/blasen\040im\040os!2/source/RCS/BLASE.DEF 1.1 1995/07/02 13:28:58 HaWi Exp $
+
+LIBRARY     BLASE INITINSTANCE TERMINSTANCE
+DATA        MULTIPLE NONSHARED
+EXPORTS     UDeregister @1
+            URegister   @2
+

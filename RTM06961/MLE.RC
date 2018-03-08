@@ -1,0 +1,97 @@
+/* $Header: D:/Projekte/Tief im MLE!1/Source/rcs/MLE.RC 1.1 1996/04/16 21:03:38 HaWi Exp $ */
+
+/* OS/2 Kopfdateien */
+#define  INCL_PM
+#include <os2.h>
+
+/* Applikationskopfdatei */
+#include "MLE.H"
+
+/* Dialoge */
+DLGTEMPLATE IDD_BEARBEITENERSETZEN LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Ersetzen", IDD_BEARBEITENERSETZEN, 12, 6, 266, 58, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      LTEXT         "~Suchtext:", IDT_BE_1, 12, 44, 60, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_BE_1, 72, 44, 120, 8, ES_MARGIN
+      LTEXT         "~Ersatztext:", IDT_BE_2, 12, 32, 60, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_BE_2, 72, 32, 120, 8, ES_MARGIN
+      AUTOCHECKBOX  "~Exakt", IDH_BE_1, 12, 20, 60, 10
+      AUTOCHECKBOX  "~von oben", IDH_BE_2, 72, 20, 60, 10
+      AUTOCHECKBOX  "~Alle", IDH_BE_3, 132, 20, 60, 10
+      DEFPUSHBUTTON "Suchen", DID_OK, 6, 4, 62, 14, WS_GROUP
+      PUSHBUTTON    "Abbrechen", DID_CANCEL, 70, 4, 62, 14
+      PUSHBUTTON    "Ersetzen", IDP_BE_1, 134, 4, 62, 14
+      PUSHBUTTON    "Stop", IDP_BE_2, 198, 4, 62, 14
+      }
+   }
+
+DLGTEMPLATE IDD_BEARBEITENSUCHEN LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Suchen", IDD_BEARBEITENSUCHEN, 12, 6, 204, 46, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      LTEXT         "~Suchtext:", IDT_BS_1, 12, 32, 60, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_BS_1, 72, 32, 120, 8, ES_MARGIN
+      AUTOCHECKBOX  "~Exakt", IDH_BS_1, 12, 20, 60, 10
+      AUTOCHECKBOX  "~von oben", IDH_BS_2, 72, 20, 60, 10
+      DEFPUSHBUTTON "Suchen", DID_OK, 6, 4, 62, 14, WS_GROUP
+      PUSHBUTTON    "Abbrechen", DID_CANCEL, 70, 4, 62, 14
+      PUSHBUTTON    "Stop", IDP_BS_1, 134, 4, 62, 14
+      }
+   }
+
+DLGTEMPLATE IDD_OPTIONENFARBE LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "", IDD_OPTIONENFARBE, 12, 6, 164, 98, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      DEFPUSHBUTTON "~Ok", DID_OK, 6, 4, 62, 14, WS_GROUP
+      PUSHBUTTON    "Abbrechen", DID_CANCEL, 70, 4, 62, 14
+      }
+   }
+
+/* Hauptmenue */
+MENU IDM
+   {
+   SUBMENU "~Datei", IDM_DATEI
+      {
+      MENUITEM "~Neu",         IDM_DATEINEU
+      MENUITEM "ô~ffnen...",   IDM_DATEIOEFFNEN
+      MENUITEM "",             0, MIS_SEPARATOR
+      MENUITEM "~Sichern",     IDM_DATEISICHERN
+      MENUITEM "Sichern ~als", IDM_DATEISICHERNALS
+      }
+   SUBMENU "~Bearbeiten", IDM_BEARBEITEN
+      {
+      MENUITEM "~RÅckgÑngig",  IDM_BEARBEITENRUECKGAENGIG
+      MENUITEM "",             0, MIS_SEPARATOR
+      MENUITEM "~Ausschneiden",IDM_BEARBEITENAUSSCHNEIDEN
+      MENUITEM "~Kopieren",    IDM_BEARBEITENKOPIEREN
+      MENUITEM "~EinfÅgen",    IDM_BEARBEITENEINFUEGEN
+      MENUITEM "~Lîschen",     IDM_BEARBEITENLOESCHEN
+      MENUITEM "",             0, MIS_SEPARATOR
+      MENUITEM "~Suchen...",   IDM_BEARBEITENSUCHEN
+      MENUITEM "Erse~tzen...", IDM_BEARBEITENERSETZEN
+      }
+   SUBMENU "~Optionen", IDM_OPTIONEN
+      {
+      SUBMENU "~Automatischer Zeilenumbruch", IDM_OPTIONENZEILENUMBRUCH
+         {
+         MENUITEM "A~n",  IDM_OPTIONENZEILENUMBRUCHAN, MIS_TEXT, MIA_CHECKED
+         MENUITEM "A~us", IDM_OPTIONENZEILENUMBRUCHAUS, MIS_TEXT, MIA_CHECKED
+         }
+      MENUITEM "~Hintergrundfarbe...", IDM_OPTIONENHINTERGRUNDFARBE
+      MENUITEM "~Vordergrundfarbe...", IDM_OPTIONENVORDERGRUNDFARBE
+      MENUITEM "~Schriftart...",       IDM_OPTIONENSCHRIFTART
+      }
+   }
+
+/* Einige Applikationstexte */
+STRINGTABLE
+   {
+   IDS_DIEDATEIWURDEVERAENDERT, "Die Datei wurde verÑndert. Wollen Sie diese Datei sichern?"
+   IDS_HINTERGRUNDFARBE,        "Hintergrundfarbe"
+   IDS_MLE,                     "MLE"
+   IDS_VORDERGRUNDFARBE,        "Vordergrundfarbe"
+   }
+
+

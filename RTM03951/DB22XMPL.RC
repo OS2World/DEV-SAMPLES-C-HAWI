@@ -1,0 +1,69 @@
+/* $Header: D:\projekte\gib mir die daten.1\source\RCS\DB22XMPL.RC 1.1 1995/05/25 15:53:57 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "DB22XMPL.H"
+
+DLGTEMPLATE IDD_SAENDERN LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "éndern Satz", IDD_SAENDERN, 0, 0, 210, 60, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      LTEXT         "~Name", 0, 8, 46, 90, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_SANAME, 102, 46, 100, 8, ES_MARGIN
+      LTEXT         "~Vorname", 0, 8, 34, 90, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_SAVORNAME, 102, 34, 100, 8, ES_MARGIN
+      LTEXT         "~Telefon", 0, 8, 22, 90, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_SATELEFON, 102, 22, 100, 8, ES_MARGIN
+      DEFPUSHBUTTON "éndern", DID_OK, 6, 4, 60, 14, WS_GROUP
+      PUSHBUTTON    "Cancel", DID_CANCEL, 69, 4, 60, 14
+      }
+   }
+
+DLGTEMPLATE IDD_SEINFUEGEN LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "EinfÅgen Satz", IDD_SEINFUEGEN, 0, 0, 210, 60, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      LTEXT         "~Name", 0, 8, 46, 90, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_SENAME, 102, 46, 100, 8, ES_MARGIN
+      LTEXT         "~Vorname", 0, 8, 34, 90, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_SEVORNAME, 102, 34, 100, 8, ES_MARGIN
+      LTEXT         "~Telefon", 0, 8, 22, 90, 8, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_SETELEFON, 102, 22, 100, 8, ES_MARGIN
+      DEFPUSHBUTTON "EinfÅgen", DID_OK, 6, 4, 60, 14, WS_GROUP
+      PUSHBUTTON    "Cancel", DID_CANCEL, 69, 4, 60, 14
+      }
+   }
+
+MENU                           IDM_DB22XMPL
+   {
+   SUBMENU     "~Datenbank",   IDM_DATENBANK
+      {
+      MENUITEM "~Anlegen...",  IDM_DANLEGEN
+      MENUITEM "~Lîschen...",  IDM_DLOESCHEN
+      }
+   SUBMENU     "~SÑtze",       IDM_SAETZE
+      {
+      MENUITEM "~EinfÅgen...", IDM_SEINFUEGEN
+      MENUITEM "é~ndern...",   IDM_SAENDERN
+      MENUITEM "Lî~schen...",  IDM_SLOESCHEN
+      }
+   }
+
+STRINGTABLE
+   {
+   IDS_CREATEERROR,  "Fehler beim Anlegen"
+   IDS_CREATEERRORT, "Die Datenbank meldet einen Fehler beim Anlegen."
+   IDS_DELETEERROR,  "Fehler beim Lîschen"
+   IDS_DELETEERRORT, "Die Datenbank meldet einen Fehler beim Lîschen von SÑtzen."
+   IDS_INSERTERROR,  "Fehler beim EinfÅgen"
+   IDS_INSERTERRORT, "Die Datenbank meldet einen Fehler beim EinfÅgen von SÑtzen."
+   IDS_NAME,         "Name"
+   IDS_READERROR,    "Fehler beim Lesen"
+   IDS_READERRORT,   "Die Datenbank meldet einen Fehler beim Lesen von SÑtzen."
+   IDS_TELEFON,      "Telefon"
+   IDS_TITEL,        "Adressliste"
+   IDS_UPDATEERROR,  "Fehler beim Ersetzen"
+   IDS_UPDATEERRORT, "Die Datenbank meldet einen Fehler beim Ersetzen von SÑtzen."
+   IDS_VORNAME,      "Vorname"
+   }

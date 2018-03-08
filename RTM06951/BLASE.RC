@@ -1,0 +1,12 @@
+/* $Header: D:/projekte/blasen\040im\040os!2/source/RCS/BLASE.RC 1.1 1995/07/02 13:38:49 HaWi Exp $ */
+
+#define  INCL_PM
+#include <os2.h>
+
+#include "BLASE.H"
+#include "BLASE.PH"
+
+/* Die beiden Bitmaps */
+BITMAP IDB_AND BLASE1.BMP
+BITMAP IDB_XOR BLASE2.BMP
+

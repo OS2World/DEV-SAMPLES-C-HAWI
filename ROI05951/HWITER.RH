@@ -1,0 +1,24 @@
+/* $Header: D:\projekte\som!wps inside\source\RCS\HWITER.RH 1.1 1995/05/25 18:53:53 HaWi Exp $ */
+
+#define DID_HELP              3
+
+#define IDN_Termin            1000
+#define IDD_Termin            1001
+#define IDSP_Tag              1002
+#define IDSP_Monat            1003
+#define IDSP_Jahr             1004
+#define IDT_DatumDelimiter1   1005
+#define IDT_DatumDelimiter2   1006
+#define IDT_DatumDelimiter3   1007
+#define IDSP_Stunde           1008
+#define IDSP_Minute           1009
+#define IDT_UhrzeitDelimiter1 1010
+#define IDT_UhrzeitDelimiter2 1011
+
+#define IDD_Bemerkung         1012
+#define IDF_Bemerkung         1013
+
+#define IDS_MMTTJJJJ          1014
+#define IDS_TTMMJJJJ          1015
+#define IDS_JJJJMMTT          1016
+#define IDS_HHMM              1017

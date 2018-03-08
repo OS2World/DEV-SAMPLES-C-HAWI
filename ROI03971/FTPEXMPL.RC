@@ -1,0 +1,70 @@
+/* $Header: Y:/Projekte/Redaktion OS!2 Inside/Gute Verbindung/Source/rcs/FTPEXMPL.RC 1.1 1997/01/03 09:49:54 HaWi Exp $ */
+
+/* Presentation Manager Kopfdatei einbinden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Anwendungskopfdatei einbinden */
+#include "FTPEXMPL.H"
+
+/* Dialoge */
+DLGTEMPLATE IDD_ENTFERNTERHOST LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Entfernter Host", IDD_ENTFERNTERHOST, 0, 0, 190, 112, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      LTEXT           "~Lokation", 0, 9, 98, 70, 10, DT_MNEMONIC
+      ENTRYFIELD      "", IDE_ENTFERNTERHOST_1, 80, 98, 100, 8, ES_MARGIN
+      LTEXT           "~Kennung", 0, 9, 86, 70, 10, DT_MNEMONIC
+      ENTRYFIELD      "", IDE_ENTFERNTERHOST_2, 80, 86, 100, 8, ES_MARGIN
+      LTEXT           "~Passwort", 0, 9, 74, 70, 10, DT_MNEMONIC
+      ENTRYFIELD      "", IDE_ENTFERNTERHOST_3, 80, 74, 100, 8, ES_MARGIN | ES_UNREADABLE
+      LTEXT           "~Account", 0, 9, 62, 70, 10, DT_MNEMONIC
+      ENTRYFIELD      "", IDE_ENTFERNTERHOST_4, 80, 62, 100, 8, ES_MARGIN
+      GROUPBOX        "Transfermode", 0, 6, 20, 178, 32
+      AUTORADIOBUTTON "~Binary", IDR_ENTFERNTERHOST_1, 12, 34, 164, 10, WS_TABSTOP | WS_GROUP
+      AUTORADIOBUTTON "~ASCII", IDR_ENTFERNTERHOST_2, 12, 24, 164, 10, WS_TABSTOP
+      DEFPUSHBUTTON   "Ok", DID_OK, 6, 4, 60, 14
+      PUSHBUTTON      "Abbrechen", DID_CANCEL, 70, 4, 60, 14
+      }
+   }
+
+/* Menuedefinition */
+MENU IDM_FTPEXMPL
+   {
+   SUBMENU "~Datei", IDM_DATEI
+      {
+      MENUITEM "Entfernte Dateien lîschen",    IDM_DATEIENTFERNTEDATEIENLOESCHEN
+      MENUITEM "Entfernte Dateien Åbertragen", IDM_DATEIENTFERNTEDATEIENUEBERTRAGEN
+      MENUITEM "Lokale Dateien lîschen",       IDM_DATEILOKALEDATEIENLOESCHEN
+      MENUITEM "Lokale Dateien Åbertragen",    IDM_DATEILOKALEDATEIENUEBERTRAGEN
+      }
+   }
+
+STRINGTABLE
+   {
+   IDS_DATE,               "Datum"
+   IDS_ERROR,              "Fehler"
+   IDS_FILENAME,           "Dateiname"
+   IDS_FTPABORT,           "Transfer aborted"
+   IDS_FTPCOMMAND,         "Command failed"
+   IDS_FTPCONNECT,         "Unable to connect to server"
+   IDS_FTPDATACONN,        "Problem initializing data connection"
+   IDS_FTPDIRECTORYCHANGE, "FTP Directory - change"
+   IDS_FTPDIRECTORYNEW,    "FTP Directory - new"
+   IDS_FTPEXAMPLE,         "FTP Example"
+   IDS_FTPEXAMPLED,        "FTP Example - "
+   IDS_FTPGROUPCHANGE,     "FTP Group - change"
+   IDS_FTPGROUPNEW,        "FTP Group - new"
+   IDS_FTPHOST,            "Unknown host"
+   IDS_FTPLOCALFILE,       "Problem opening the local file"
+   IDS_FTPLOGIN,           "Login failed"
+   IDS_FTPNOERROR,         "No error"
+   IDS_FTPNOPRIMARY,       "No primary connection for proxy transfer"
+   IDS_FTPNOXLATETBL,      "No code page translation table was loaded"
+   IDS_FTPPROXYTHIRD,      "Proxy server does not support third party"
+   IDS_FTPSERVICE,         "Unknown service"
+   IDS_FTPSOCKET,          "Unable to obtain socket"
+   IDS_SIZE,               "Grî·e"
+   IDS_TIME,               "Uhrzeit"
+   }
+

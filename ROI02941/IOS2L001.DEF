@@ -1,0 +1,16 @@
+; $Header: D:\projekte\gib mir die daten\source\RCS\IOS2L001.DEF 1.1 1995/05/25 15:48:58 HaWi Exp $
+
+LIBRARY     IOS2L001 INITINSTANCE TERMINSTANCE
+DATA        MULTIPLE NONSHARED
+PROTMODE
+EXPORTS     IOS2L_Register      @1
+            IOS2L_WndProc       @3
+            IOS2L_AllocInfo     @4
+            IOS2L_AllocData     @5
+            IOS2L_FreeInfo      @6
+            IOS2L_FreeData      @7
+            IOS2L_OpenDatabase  @8
+            IOS2L_CloseDatabase @9
+            IOS2L_CreateDB      @10
+            IOS2L_DropDB        @11
+            

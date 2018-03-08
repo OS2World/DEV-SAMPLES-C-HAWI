@@ -1,0 +1,53 @@
+/* $Header: D:/Projekte/Alles\040geregelt/Source/RCS/DREID.RC 1.3 1995/10/04 13:13:08 HaWi Exp $ */
+
+/* System Kopfdateien laden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Kopfdateien fÅr diese PM Klasse laden */
+#include "DREID.H"
+#include "DREID.PH"
+
+/* Dialog zum Einstellen der Optionen fÅr diese PM Klasse */
+DLGTEMPLATE IDD_DREID LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "DREID Styles", IDD_DREID, 0, 0, 258, 164, WS_CLIPSIBLINGS | WS_SAVEBITS | WS_SYNCPAINT | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      LTEXT           "~Text:", 0, 12, 152, 60, 8, DT_MNEMONIC
+      MLE             "", IDF_TEXT, 74, 104, 160, 56, MLS_BORDER | MLS_DISABLEUNDO | MLS_HSCROLL | MLS_IGNORETAB | MLS_VSCROLL | MLS_WORDWRAP | WS_GROUP
+      LTEXT           "~ID:", 0, 12, 92, 60, 8, DT_MNEMONIC
+      ENTRYFIELD      "", IDE_ID, 74, 92, 90, 8, ES_MARGIN
+      COMBOBOX        "", IDC_ID, 166, 41, 78, 60, CBS_DROPDOWNLIST | LS_HORZSCROLL
+      GROUPBOX        "DREID Styles", 0, 6, 46, 246, 42
+      AUTORADIOBUTTON "~In", IDR_IN, 12, 70, 60, 10, WS_GROUP
+      AUTORADIOBUTTON "~Out", IDR_OUT, 74, 70, 60, 10
+      AUTORADIOBUTTON "~Left", IDR_LEFT, 12, 60, 60, 10, WS_GROUP
+      AUTORADIOBUTTON "~Center", IDR_CENTER, 74, 60, 60, 10
+      AUTORADIOBUTTON "~Right", IDR_RIGHT, 136, 60, 60, 10
+      AUTORADIOBUTTON "~Bottom", IDR_BOTTOM, 12, 50, 60, 10, WS_GROUP
+      AUTORADIOBUTTON "~Top", IDR_TOP, 74, 50, 60, 10
+      GROUPBOX        "Base Styles", 0, 6, 20, 246, 22
+      CHECKBOX        "~Visible", IDH_VISIBLE, 12, 24, 60, 10, WS_GROUP
+      CHECKBOX        "~Disabled", IDH_DISABLED, 74, 24, 60, 10
+      DEFPUSHBUTTON   "Ok", DID_OK, 6, 4, 60, 12, WS_GROUP
+      PUSHBUTTON      "Cancel", DID_CANCEL, 68, 4, 60, 12
+      PUSHBUTTON      "Fonts...", IDP_FONTS, 130, 4, 60, 12
+      PUSHBUTTON      "Bidi...", IDP_BIDI, 192, 4, 60, 12
+      }
+   }
+
+/* Texte, die in den zu generierenden CONTROL Ressource Zeilen, verwendet werden sollen */
+STRINGTABLE
+   {
+   DREID_BOTTOM,   "DREID_BOTTOM"
+   DREID_CENTER,   "DREID_CENTER"
+   DREID_DISABLED, "DREID_DISABLED"
+   DREID_IN,       "DREID_IN"
+   DREID_LEFT,     "DREID_LEFT"
+   DREID_OUT,      "DREID_OUT"
+   DREID_RIGHT,    "DREID_RIGHT"
+   DREID_TOP,      "DREID_TOP"
+   DREID_VISIBLE,  "DREID_VISIBLE"
+   }
+
+

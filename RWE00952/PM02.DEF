@@ -1,0 +1,6 @@
+; $Header: D:\projekte\fensterln mit os!2\source\RCS\PM02.DEF 1.1 1995/05/25 15:32:53 HaWi Exp $
+
+NAME        PM02 WINDOWAPI
+DATA        NONSHARED 
+STACKSIZE   131068
+PROTMODE

@@ -1,0 +1,59 @@
+/* $Header: D:/PROJEKTE/Die Programmierung des DB2!2/Source/rcs/DB2SPY.RC 1.2 1995/12/11 15:43:01 HaWi Exp $ */
+
+/* OS/2 Kopfdateien */
+#define  INCL_PM
+#include <os2.h>
+
+/* Anwendungskopfdatei */
+#include "DB2SPY.H"
+
+/* MenÅ der Anwendung */
+MENU IDM_DB2SPY
+   {
+   SUBMENU "~Scan", IDM_SCAN
+      {
+      MENUITEM "~Connection Services...", IDM_SCONNECTIONSERVICES
+      MENUITEM "~Databases...",           IDM_SDATABASES
+      MENUITEM "~Packages...",            IDM_SPACKAGES
+      MENUITEM "~Tables...",              IDM_STABLES
+      MENUITEM "~Tablespaces...",         IDM_STABLESPACES
+      MENUITEM "~Views...",               IDM_SVIEWS
+      }
+   }
+
+/* Anwendungstexte */
+STRINGTABLE
+   {
+   IDS_ALIAS,                            "Alias"
+   IDS_AUTHENTICATION,                   "Authentication"
+   IDS_COMMENT,                          "Comment"
+   IDS_CONNECTIONSERVICES,               "Connection Services"
+   IDS_CREATOR,                          "Creator"
+   IDS_DATABASES,                        "Databases"
+   IDS_DBNAME,                           "DB Name"
+   IDS_DBTYPE,                           "DB Type"
+   IDS_DIRECTORY,                        "Directory"
+   IDS_DRIVE,                            "Drive"
+   IDS_HOST,                             "Host"
+   IDS_LOCALLU,                          "Local LU"
+   IDS_MODE,                             "Mode"
+   IDS_NAME,                             "Name"
+   IDS_NODE,                             "Node"
+   IDS_PACKAGES,                         "Packages"
+   IDS_PARTNERLU,                        "Partner LU"
+   (IDS_SQLEDINFOAUTHENTICATIONLOW + 0), "Server"
+   (IDS_SQLEDINFOAUTHENTICATIONLOW + 1), "Client"
+   (IDS_SQLEDINFOAUTHENTICATIONLOW + 2), "DCS"
+   (IDS_SQLEDINFOAUTHENTICATIONLOW + 3), "Not specified"
+   (IDS_SQLEDINFOTYPELOW + 0),           "Indirect Database"
+   (IDS_SQLEDINFOTYPELOW + 1),           "Remote Database"
+   (IDS_SQLEDINFOTYPELOW + 2),           "Home Database"
+   (IDS_SQLEDINFOTYPELOW + 3),           "DCE Database"
+   IDS_TABLES,                           "Tables"
+   IDS_TABLESPACES,                      "Tablespaces"
+   IDS_TYPE,                             "Type"
+   IDS_VIEWS,                            "Views"
+   }
+
+
+

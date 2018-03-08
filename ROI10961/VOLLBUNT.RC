@@ -1,0 +1,30 @@
+/* $Header: D:/Projekte/Voll bunt/Source/rcs/VOLLBUNT.RC 1.1 1996/07/31 19:25:19 HaWi Exp $ */
+
+/* Konstanten des Presentation Manager laden */
+#define  INCL_PM
+#include <os2.h>
+
+/* Konstanten der Anwendung laden */
+#include "VOLLBUNT.H"
+
+/* Ein Dialog */
+DLGTEMPLATE IDD_VOLLBUNT LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Voll bunt Dialog", IDD_VOLLBUNT, 0, 0, 132, 40, WS_CLIPSIBLINGS | WS_SAVEBITS | WS_SYNCPAINT | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR | FCF_TASKLIST
+      {
+      CTEXT         "Voll schrÑg", IDT_VOLLBUNT, 6, 24, 118,  8
+      DEFPUSHBUTTON "Voll", IDP_VOLLBUNT1, 6, 4, 60, 14, WS_GROUP
+      PUSHBUTTON    "bunt", IDP_VOLLBUNT2, 70, 4, 60, 14
+      }
+   }
+
+/* MenÅ der Anwendung */
+MENU IDM_VOLLBUNT
+   {
+   SUBMENU "~Dialog", IDM_VOLLBUNT1
+      {
+      MENUITEM "~Voll bunt...", IDM_VOLLBUNT2
+      }
+   }
+
+

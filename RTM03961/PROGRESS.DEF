@@ -1,0 +1,7 @@
+; $Header: D:/Projekte/Kleine Helferlein!2/Source/rcs/PROGRESS.DEF 1.1 1996/03/06 13:54:17 HaWi Exp $
+
+NAME      PROGRESS WINDOWAPI
+DATA      NONSHARED
+STACKSIZE 131068
+
+

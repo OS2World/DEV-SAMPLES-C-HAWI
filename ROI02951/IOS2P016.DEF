@@ -1,0 +1,6 @@
+; $Header: D:\projekte\dde - die zweite\source\RCS\IOS2P016.DEF 1.1 1995/05/25 15:27:26 HaWi Exp $
+
+NAME        IOS2P016 WINDOWAPI
+DATA        NONSHARED 
+STACKSIZE   80000
+PROTMODE

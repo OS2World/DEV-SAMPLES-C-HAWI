@@ -1,0 +1,500 @@
+/* $Header: D:\projekte\gib mir die daten\source\RCS\IOS2L001.SQC 1.1 1995/05/25 15:49:11 HaWi Exp $ */
+
+#define  INCL_BASE
+#define  INCL_PM
+#include <os2.h>
+
+#include <sql.h>
+#include <sqlcodes.h>
+#include <sqlenv.h>
+
+#include <stdlib.h>
+#include <string.h>
+      
+#include "IOS2L001.H"
+
+EXEC SQL INCLUDE sqlca ;
+
+EXEC SQL BEGIN DECLARE SECTION;
+   char  SZNAME [65] ;
+   long  ULCOUNT ;
+   long  ULKEY ;
+   short IND ;
+EXEC SQL END DECLARE SECTION ;
+
+typedef ULONG (*PDXF) (MSG, MPARAM, MPARAM) ;
+
+HWND hwndIOS2P_g = NULLHANDLE ;
+
+/* *******************************************************************
+   *** Function: IOS2L_Register                                    ***
+   ******************************************************************* */
+ULONG EXPENTRY IOS2L_Register (const HWND hwnd)
+   {
+   hwndIOS2P_g = hwnd ;
+   _beginthread (IOS2L_Thread,
+                 NULL,
+                 81919,
+                 (PVOID) 0) ;
+   return IOS2L_NOERROR ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_Thread                                      ***
+   ******************************************************************* */
+VOID IOS2L_Thread (VOID * pv)
+   {
+   HAB  hab ;
+   HMQ  hmq ;
+   HWND hwnd ;
+   QMSG qmsg ;
+
+   if   ((hab = WinInitialize (QV_OS2)) != NULLHANDLE)
+        {
+        if   ((hmq = WinCreateMsgQueue (hab,
+                                        0)) != NULLHANDLE)
+             {
+             if   (WinRegisterClass (hab,
+                                     WCP_IOS2L,
+                                     (PFNWP) IOS2L_WndProc,
+                                     0,
+                                     sizeof (PVOID)))
+                  {
+                  hwnd = WinCreateWindow (HWND_OBJECT,
+                                          WCP_IOS2L,
+                                          "",
+                                          WS_DISABLED,
+                                          0,
+                                          0,
+                                          0,
+                                          0,
+                                          HWND_OBJECT,
+                                          HWND_BOTTOM,
+                                          1,
+                                          NULL,
+                                          NULL) ;
+                  while (WinGetMsg (hab,
+                                    &qmsg,
+                                    0,
+                                    0,
+                                    0))
+                     {
+                     WinDispatchMsg (hab,
+                                     &qmsg) ;
+                     }
+                  WinDestroyWindow (hwnd) ;
+                  }
+             WinDestroyMsgQueue (hmq) ;
+             }
+        WinTerminate (hab) ;
+        }
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_WndProc                                     ***
+   ******************************************************************* */
+MRESULT EXPENTRY IOS2L_WndProc (const HWND hwnd,
+                                const MSG msg,
+                                const MPARAM mp1,
+                                MPARAM mp2)
+   {
+   static const PDXF apdxf [] = { IOS2L_TableIOS2L } ;
+
+   switch (msg)
+      {
+      case WM_CREATE:
+           if   (IOS2L_OpenDatabase () != IOS2L_NOERROR)
+                {
+                WinPostMsg (hwndIOS2P_g,
+                            WMP_IOS2LOPENERROR,
+                            MPFROMHWND (hwnd),
+                            MPVOID) ;
+                }
+           else
+                {
+                WinPostMsg (hwndIOS2P_g,
+                            WMP_IOS2LOPENED,
+                            MPFROMHWND (hwnd),
+                            MPVOID) ;
+                }
+           break ;
+      case WM_DESTROY:
+           IOS2L_CloseDatabase () ;
+           break ;
+      case WMP_IOS2LDELETE:
+      case WMP_IOS2LINSERT:
+      case WMP_IOS2LREQUEST:
+      case WMP_IOS2LUPDATE:
+           (*apdxf [((PIOS2LINFO) mp2)->ulEbene - 1]) (msg,
+                                                       mp1,
+                                                       mp2) ;
+           return (MRESULT) FALSE ;
+      }
+   return WinDefWindowProc (hwnd,
+                            msg,
+                            mp1,
+                            mp2) ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_AllocInfo                                   ***
+   ******************************************************************* */
+PIOS2LINFO EXPENTRY IOS2L_AllocInfo (VOID)
+   {
+   return calloc (1,
+                  sizeof (IOS2LINFO)) ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_AllocData                                   ***
+   ******************************************************************* */
+PIOS2LINFO EXPENTRY IOS2L_AllocData (const ULONG ulType)
+   {
+   PIOS2LINFO         pios2linfo ;
+   PVOID              pv ;
+   static const ULONG ulTables [] = { sizeof (IOS2LDATA) } ;
+
+   pios2linfo = IOS2L_AllocInfo () ;
+   pv = calloc (1,
+                ulTables [ulType - 1]) ;
+   pios2linfo->ulEbene = ulType ;
+   pios2linfo->pData = pv ;
+   return pios2linfo ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_FreeInfo                                    ***
+   ******************************************************************* */
+ULONG EXPENTRY IOS2L_FreeInfo (PIOS2LINFO pios2linfo)
+   {
+   free (pios2linfo) ;
+   return IOS2L_NOERROR ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_FreeData                                    ***
+   ******************************************************************* */
+ULONG EXPENTRY IOS2L_FreeData (PIOS2LINFO pios2linfo)
+   {
+   if   (pios2linfo->pData != NULL)
+        {
+        free (pios2linfo->pData) ;
+        pios2linfo->pData = NULL ;
+        }
+   return IOS2L_NOERROR ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_CreateDB                                    ***
+   ******************************************************************* */
+ULONG EXPENTRY IOS2L_CreateDB (const CHAR ch)
+   {
+   sqlecrdb ("IOS2L",
+             ch,
+             NULL,
+             &sqlca) ;
+   if   (SQLCODE != SQL_RC_OK)
+        {
+        return IOS2L_ERROR ;
+        }
+   sqlabind ("IOS2L002.BND",
+             "IOS2L",
+             0,
+             "ERROR.LOG",
+             SQL_FMT_DEF,
+             &sqlca) ;
+   if   (SQLCODE != SQL_RC_OK)
+        {
+        return IOS2L_ERROR ;
+        }
+   if   ((IOS2L_OpenDatabase ()) != IOS2L_NOERROR)
+        {
+        return IOS2L_ERROR ;
+        }
+   if   ((IOS2L_CreateTable ()) != IOS2L_NOERROR)
+        {
+        return IOS2L_ERROR ;
+        }
+   sqlabind ("IOS2L001.BND",
+             "IOS2L",
+             0,
+             "ERROR.LOG",
+             SQL_FMT_DEF,
+             &sqlca) ;
+   return (SQLCODE != SQL_RC_OK) ? IOS2L_ERROR : IOS2L_NOERROR ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_DropDB                                      ***
+   ******************************************************************* */
+ULONG EXPENTRY IOS2L_DropDB (VOID)
+   {
+   IOS2L_CloseDatabase () ;
+   sqledrpd ("IOS2L",
+             &sqlca) ;
+   return (SQLCODE != SQL_RC_OK) ? IOS2L_ERROR : IOS2L_NOERROR ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_OpenDatabase                                ***
+   ******************************************************************* */
+ULONG EXPENTRY IOS2L_OpenDatabase (VOID)
+   {
+   sqlestar () ;
+   EXEC SQL CONNECT TO IOS2L ;
+   return (SQLCODE != SQL_RC_OK) ? IOS2L_ERROR : IOS2L_NOERROR ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_CloseDatabase                               ***
+   ******************************************************************* */
+ULONG EXPENTRY IOS2L_CloseDatabase (VOID)
+   {
+   EXEC SQL CONNECT RESET ;
+   return IOS2L_NOERROR ;
+   }
+
+/* *******************************************************************
+   *** Function: IOS2L_TableIOS2L                                  ***
+   ******************************************************************* */
+ULONG IOS2L_TableIOS2L (const MSG msg,
+                        const MPARAM mp1,
+                        MPARAM mp2)
+   {
+   BOOL       fOpen ;
+   PIOS2LINFO pios2linfoReceive ;
+   PIOS2LDATA pios2ldataReceive ;
+   PIOS2LINFO pios2linfoSend ;
+   PIOS2LDATA pios2ldataSend ;
+   ULONG      ulCount ;
+
+   pios2linfoReceive = mp2 ;
+   pios2ldataReceive = pios2linfoReceive->pData ;
+   switch (msg)
+      {
+      case WMP_IOS2LDELETE:
+           switch (LONGFROMMP (mp1))
+              {
+              case IOS2L_DELETEPART:
+                   ULKEY = pios2ldataReceive->ulKey ;
+                   EXEC SQL WHENEVER SQLERROR goto DelError ;
+                   EXEC SQL WHENEVER SQLWARNING goto DelError ;
+                   EXEC SQL WHENEVER NOT FOUND goto DelNotFound ;
+                   EXEC SQL DELETE
+                              FROM   IOS2L
+                              WHERE  ULKEY = :ULKEY ;
+                   EXEC SQL COMMIT WORK ;
+                   pios2linfoReceive->ulRC = IOS2L_NOERROR ;
+                   goto DelOk ;
+                    DelError:
+                   pios2linfoReceive->ulRC = IOS2L_ERROR ;
+                   goto DelErrorEnd ;
+                    DelNotFound:
+                   pios2linfoReceive->ulRC = IOS2L_NOTFOUND ;
+                    DelErrorEnd:
+                   EXEC SQL WHENEVER SQLERROR continue ;
+                   EXEC SQL WHENEVER SQLWARNING continue ;
+                   EXEC SQL WHENEVER NOT FOUND continue ;
+                   EXEC SQL ROLLBACK WORK ;
+                    DelOk:
+                   WinPostMsg (pios2linfoReceive->hwndSender,
+                               WMP_IOS2LSEND,
+                               mp1,
+                               mp2) ;
+                   return IOS2L_NOERROR ;
+              }
+           break;
+      case WMP_IOS2LINSERT:
+           switch (LONGFROMMP (mp1))
+              {
+              case IOS2L_INSERTPART:
+                   strcpy (SZNAME,
+                           pios2ldataReceive->szName) ;
+                   EXEC SQL WHENEVER SQLERROR goto InsError ;
+                   EXEC SQL WHENEVER SQLWARNING goto InsError ;
+                   EXEC SQL WHENEVER NOT FOUND goto InsNotFound ;
+                   EXEC SQL LOCK
+                              TABLE  IOS2L
+                              IN     EXCLUSIVE MODE ;
+                   EXEC SQL SELECT   MAX (ULKEY)
+                              INTO   :ULKEY :IND
+                              FROM   IOS2L ;
+                   ULKEY = (IND < 0) ? 1 : ++ULKEY ;
+                   EXEC SQL INSERT
+                              INTO   IOS2L
+                              VALUES (:ULKEY,
+                                      :SZNAME) ;
+                   EXEC SQL COMMIT WORK ;
+                   pios2linfoReceive->ulRC = IOS2L_NOERROR ;
+                   goto InsOk ;
+                    InsError:
+                   pios2linfoReceive->ulRC = IOS2L_ERROR ;
+                   goto InsErrorEnd ;
+                    InsNotFound:
+                   pios2linfoReceive->ulRC = IOS2L_NOTFOUND ;
+                    InsErrorEnd:
+                   EXEC SQL WHENEVER SQLERROR continue ;
+                   EXEC SQL WHENEVER SQLWARNING continue ;
+                   EXEC SQL WHENEVER NOT FOUND continue ;
+                   EXEC SQL ROLLBACK WORK ;
+                    InsOk:
+                   WinPostMsg (pios2linfoReceive->hwndSender,
+                               WMP_IOS2LSEND,
+                               mp1,
+                               mp2) ;
+                   return IOS2L_NOERROR ;
+              }
+           break;
+      case WMP_IOS2LREQUEST:
+           switch (LONGFROMMP (mp1))
+              {
+              case IOS2L_REQUESTALL:
+                   fOpen = FALSE ;
+                   EXEC SQL WHENEVER SQLERROR goto ReqAllError ;
+                   EXEC SQL WHENEVER SQLWARNING goto ReqAllError ;
+                   EXEC SQL WHENEVER NOT FOUND goto ReqAllNotFound ;
+                   EXEC SQL DECLARE cursor1 CURSOR FOR
+                              SELECT   ULKEY
+                                FROM   IOS2L
+                                ORDER  BY ULKEY ;
+                   EXEC SQL OPEN cursor1 ;
+                   fOpen = TRUE ;
+                   ulCount = 0 ;
+                   while (SQLCODE == SQL_RC_OK)
+                      {
+                      pios2linfoSend = IOS2L_AllocData (IOS2L_DATA) ;
+                      pios2ldataSend = pios2linfoSend->pData ;
+                      *pios2linfoSend = *pios2linfoReceive ;
+                      pios2linfoSend->ulSatzNr = ++ulCount ;
+                      pios2linfoSend->ulRC = IOS2L_NOERROR ;
+                      pios2linfoSend->pData = pios2ldataSend ;
+                      EXEC SQL FETCH    cursor1
+                                 INTO   :ULKEY ;
+                      pios2ldataSend->ulKey = ULKEY ;
+                      WinPostMsg (pios2linfoSend->hwndSender,
+                                  WMP_IOS2LSEND,
+                                  mp1,
+                                  MPFROMP (pios2linfoSend)) ;
+                      }
+                    ReqAllError:
+                   pios2linfoReceive->ulRC = IOS2L_ERROR ;
+                   goto ReqAllErrorEnd ;
+                    ReqAllNotFound:
+                   pios2linfoReceive->ulRC = IOS2L_NOTFOUND ;
+                    ReqAllErrorEnd:
+                   EXEC SQL WHENEVER SQLERROR continue ;
+                   EXEC SQL WHENEVER SQLWARNING continue ;
+                   EXEC SQL WHENEVER NOT FOUND continue ;
+                   if   (fOpen)
+                        {
+                        pios2linfoReceive->ulRC = IOS2L_END ;
+                        IOS2L_FreeData (pios2linfoSend) ;
+                        IOS2L_FreeInfo (pios2linfoSend) ;
+                        EXEC SQL CLOSE cursor1 ;
+                        }
+                   else
+                        {
+                        EXEC SQL ROLLBACK WORK ;
+                        }
+                   WinPostMsg (pios2linfoReceive->hwndSender,
+                               WMP_IOS2LSEND,
+                               mp1,
+                               mp2) ;
+                   return IOS2L_NOERROR ;
+              case IOS2L_REQUESTCOUNT:
+                   EXEC SQL WHENEVER SQLERROR goto ReqCountError ;
+                   EXEC SQL WHENEVER SQLWARNING goto ReqCountError ;
+                   EXEC SQL WHENEVER NOT FOUND goto ReqCountNotFound ;
+                   EXEC SQL SELECT   COUNT (*)
+                              INTO   :ULCOUNT
+                                      FROM   IOS2L ;
+                   pios2linfoReceive->ulEID = ULCOUNT ;
+                   EXEC SQL COMMIT WORK ;
+                   pios2linfoReceive->ulRC = IOS2L_NOERROR ;
+                   goto ReqCountOk ;
+                    ReqCountError:
+                   pios2linfoReceive->ulRC = IOS2L_ERROR ;
+                   goto ReqCountErrorEnd ;
+                    ReqCountNotFound:
+                   pios2linfoReceive->ulRC = IOS2L_NOTFOUND ;
+                    ReqCountErrorEnd:
+                   pios2linfoReceive->ulEID = 0 ;
+                   EXEC SQL WHENEVER SQLERROR continue ;
+                   EXEC SQL WHENEVER SQLWARNING continue ;
+                   EXEC SQL WHENEVER NOT FOUND continue ;
+                   EXEC SQL ROLLBACK WORK ;
+                    ReqCountOk:
+                   WinPostMsg (pios2linfoReceive->hwndSender,
+                               WMP_IOS2LSEND,
+                               mp1,
+                               mp2) ;
+                   return IOS2L_NOERROR ;
+              case IOS2L_REQUESTPART:
+                   ULKEY = pios2ldataReceive->ulKey ;
+                   EXEC SQL WHENEVER SQLERROR goto ReqPartError ;
+                   EXEC SQL WHENEVER SQLWARNING goto ReqPartError ;
+                   EXEC SQL WHENEVER NOT FOUND goto ReqPartNotFound ;
+                   EXEC SQL SELECT   SZNAME
+                              INTO   :SZNAME
+                              FROM   IOS2L
+                              WHERE  ULKEY = :ULKEY ;
+                   strcpy (pios2ldataReceive->szName,
+                           SZNAME) ;
+                   EXEC SQL COMMIT WORK ;
+                   pios2linfoReceive->ulRC = IOS2L_NOERROR ;
+                   goto ReqPartOk ;
+                    ReqPartError:
+                   pios2linfoReceive->ulRC = IOS2L_ERROR ;
+                   goto ReqPartErrorEnd ;
+                    ReqPartNotFound:
+                   pios2linfoReceive->ulRC = IOS2L_NOTFOUND ;
+                    ReqPartErrorEnd:
+                   EXEC SQL WHENEVER SQLERROR continue ;
+                   EXEC SQL WHENEVER SQLWARNING continue ;
+                   EXEC SQL WHENEVER NOT FOUND continue ;
+                   EXEC SQL ROLLBACK WORK ;
+                    ReqPartOk:
+                   WinPostMsg (pios2linfoReceive->hwndSender,
+                               WMP_IOS2LSEND,
+                               mp1,
+                               mp2) ;
+                   return IOS2L_NOERROR ;
+              }
+           break ;
+      case WMP_IOS2LUPDATE:
+           switch (LONGFROMMP (mp1))
+              {
+              case IOS2L_UPDATEPART:
+                   ULKEY = pios2ldataReceive->ulKey ;
+                   strcpy (SZNAME,
+                           pios2ldataReceive->szName) ;
+                   EXEC SQL WHENEVER SQLERROR goto UpdError ;
+                   EXEC SQL WHENEVER SQLWARNING goto UpdError ;
+                   EXEC SQL WHENEVER NOT FOUND goto UpdNotFound ;
+                   EXEC SQL UPDATE   IOS2L
+                              SET    SZNAME = :SZNAME
+                              WHERE  ULKEY = :ULKEY ;
+                   EXEC SQL COMMIT WORK ;
+                   pios2linfoReceive->ulRC = IOS2L_NOERROR ;
+                   goto UpdOk ;
+                    UpdError:
+                   pios2linfoReceive->ulRC = IOS2L_ERROR ;
+                   goto UpdErrorEnd ;
+                    UpdNotFound:
+                   pios2linfoReceive->ulRC = IOS2L_NOTFOUND ;
+                    UpdErrorEnd:
+                   EXEC SQL WHENEVER SQLERROR continue ;
+                   EXEC SQL WHENEVER SQLWARNING continue ;
+                   EXEC SQL WHENEVER NOT FOUND continue ;
+                   EXEC SQL ROLLBACK WORK ;
+                    UpdOk:
+                   WinPostMsg (pios2linfoReceive->hwndSender,
+                               WMP_IOS2LSEND,
+                               mp1,
+                               mp2) ;
+                   return IOS2L_NOERROR ;
+              }
+           break ;
+      }
+   return IOS2L_NOERROR ;
+   }

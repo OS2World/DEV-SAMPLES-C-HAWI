@@ -1,0 +1,127 @@
+/* $Header: D:/Projekte/Exploring WebExplorer/Source/rcs/WEBEX.RC 1.2 1996/04/15 13:19:25 HaWi Exp $ */
+
+/* OS/2 Kopfdateien */
+#define  INCL_PM
+#include <os2.h>
+
+/* Applikations Kopfdatei */
+#include "WEBEX.H"
+
+/* Dialog zum Einstellen des WEBExplorer Caches */
+DLGTEMPLATE IDD_OPTIONENCACHE LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Optionen - Cache", IDD_OPTIONENCACHE, 0, 0, 230, 82, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      AUTOCHECKBOX  "~Cache benutzen", IDH_OC_1, 9, 68, 81, 10, WS_TABSTOP
+      AUTOCHECKBOX  "Cache ~Images", IDH_OC_2, 19, 56, 95, 10, WS_TABSTOP
+      LTEXT         "Anzahl ~Dokumente im Cache", IDT_OC_1, 19, 44, 140, 10, DT_MNEMONIC
+      ENTRYFIELD    "0", IDE_OC_1, 162, 44, 60, 10, ES_MARGIN
+      LTEXT         "Anzahl ~Images im Cache", IDT_OC_2, 19, 32, 140, 10, DT_MNEMONIC
+      ENTRYFIELD    "0", IDE_OC_2, 162, 32, 60, 10, ES_MARGIN
+      LTEXT         "Cache ~Verzeichnis", IDT_OC_3, 19, 20, 140, 10, DT_MNEMONIC
+      ENTRYFIELD    "0", IDE_OC_3, 162, 20, 60, 10, ES_MARGIN
+      DEFPUSHBUTTON "Ok", DID_OK, 6, 4, 60, 14
+      PUSHBUTTON    "Cancel", DID_CANCEL, 70, 4, 60, 14
+      }
+   }
+
+/* Dialog zum Einstellen der WEBExplorer Displayoptionen */
+DLGTEMPLATE IDD_OPTIONENDISPLAY LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Optionen - Display", IDD_OPTIONENDISPLAY, 0, 0, 260, 82, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      LTEXT         "~Fontname", IDT_OD_9, 9, 68, 90, 10, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_OD_1, 100, 68, 60, 10, ES_MARGIN
+      PUSHBUTTON    "Einstellen", IDP_OD_5, 200, 66, 50, 10
+      LTEXT         "~Textfarbe", IDT_OD_1, 9, 56, 90, 10, DT_MNEMONIC
+      LTEXT         "", IDT_OD_2, 100, 56, 90, 10, DT_MNEMONIC
+      PUSHBUTTON    "Einstellen", IDP_OD_1, 200, 54, 50, 10
+      LTEXT         "~Linkfarbe", IDT_OD_3, 9, 44, 90, 10, DT_MNEMONIC
+      LTEXT         "", IDT_OD_4, 100, 44, 90, 10, DT_MNEMONIC
+      PUSHBUTTON    "Einstellen", IDP_OD_2, 200, 42, 50, 10
+      LTEXT         "~Gesehene Linkfarbe", IDT_OD_5, 9, 32, 90, 10, DT_MNEMONIC
+      LTEXT         "", IDT_OD_6, 100, 32, 90, 10, DT_MNEMONIC
+      PUSHBUTTON    "Einstellen", IDP_OD_3, 200, 30, 50, 10
+      LTEXT         "~Hintergrundfarbe", IDT_OD_7, 9, 20, 90, 10, DT_MNEMONIC
+      LTEXT         "", IDT_OD_8, 100, 20, 90, 10, DT_MNEMONIC
+      PUSHBUTTON    "Einstellen", IDP_OD_4, 200, 18, 50, 10
+      DEFPUSHBUTTON "Ok", DID_OK, 6, 4, 60, 14
+      PUSHBUTTON    "Cancel", DID_CANCEL, 70, 4, 60, 14
+      }
+   }
+
+/* Dialog mit Farbauswahl */
+DLGTEMPLATE IDD_OPTIONENFARBE LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "Optionen - Farbe", IDD_OPTIONENFARBE, 0,  0, 164, 98, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      DEFPUSHBUTTON "Ok", DID_OK, 6, 4, 60, 14
+      PUSHBUTTON    "Cancel", DID_CANCEL, 70, 4, 60, 14
+      }
+   }
+
+/* Dialog zum Erfassen einer neuen WEB Gruppe */
+DLGTEMPLATE IDD_EINFUEGENAREA LOADONCALL MOVEABLE DISCARDABLE
+   {
+   DIALOG "EinfÅgen - Gruppe", IDD_EINFUEGENAREA, 0, 0, 190, 34, WS_SYNCPAINT | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE | FS_DLGBORDER | FS_NOBYTEALIGN, FCF_SYSMENU | FCF_TITLEBAR
+      {
+      LTEXT         "~Bezeichnung", IDT_EG_1, 9, 20, 70, 10, DT_MNEMONIC
+      ENTRYFIELD    "", IDE_EG_1, 80, 20, 100, 10, ES_MARGIN
+      DEFPUSHBUTTON "Ok", DID_OK, 6, 4, 60, 14
+      PUSHBUTTON    "Cancel", DID_CANCEL, 70, 4, 60, 14
+      }
+   }
+
+/* PopupmenÅ fÅr WEB Gruppen */
+MENU IDM_AREA
+   {
+   MENUITEM "~EinfÅgen...", IDM_AREAEINFUEGEN, MIS_TEXT
+   MENUITEM "~Lîschen...",  IDM_AREALOESCHEN, MIS_TEXT
+   }
+
+/* PopupmenÅ fÅr WEB Seiten */
+MENU IDM_ITEM
+   {
+   MENUITEM "~Laden",             IDM_ITEMLADEN, MIS_TEXT
+   MENUITEM "~In Datei laden...", IDM_ITEMINDATEILADEN, MIS_TEXT
+   MENUITEM "Lî~schen...",        IDM_ITEMLOESCHEN, MIS_TEXT
+   }
+
+/* PopupmenÅ fÅr Root Eintrag */
+MENU IDM_ROOT
+   {
+   MENUITEM "~EinfÅgen...", IDM_ROOTEINFUEGEN, MIS_TEXT
+   }
+
+/* HauptmenÅ der Applikation */
+MENU IDM_WEBEX
+   {
+   SUBMENU "~Dokument", IDM_DOKUMENT
+      {
+      MENUITEM "~Laden",             IDM_DOKUMENTLADEN
+      MENUITEM "~In Datei laden...", IDM_DOKUMENTINDATEILADEN
+      MENUITEM "~Laden ~stoppen",    IDM_DOKUMENTLADENSTOPPEN
+      MENUITEM "~Drucken",           IDM_DOKUMENTDRUCKEN
+      }
+   SUBMENU "~Editieren", IDM_EDITIEREN
+      {
+      MENUITEM "~Collapse", IDM_EDITIERENCOLLAPSE
+      MENUITEM "~Expand",   IDM_EDITIERENEXPAND
+      }
+   SUBMENU "~Optionen", IDM_OPTIONEN
+      {
+      MENUITEM "~Cache",             IDM_OPTIONENCACHE
+      MENUITEM "~Display",           IDM_OPTIONENDISPLAY
+      }
+   }
+
+/* Einige Applikationstexte */
+STRINGTABLE
+   {
+   IDS_PROGRAMM                                "Exploring WEBExplorer"
+   IDS_SICHERHEITSABFRAGE                      "Sicherheitsabfrage"
+   IDS_WOLLENSIEDIESEWEBGRUPPEWIRKLICHLOESCHEN "Wollen Sie diese WEB Gruppe wirklich loeschen? Damit werden alle enthaltenen WEB Seiten ebenfalls geloescht."
+   IDS_WOLLENSIEDIESEWEBSEITEWIRKLICHLOESCHEN  "Wollen Sie diese WEB Seite wirklich loeschen?"
+   }
+
+
