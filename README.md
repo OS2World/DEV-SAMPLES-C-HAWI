@@ -3,12 +3,11 @@ These are OS/2 development samples that Harald Wilhelm wrote from several magazi
 
 
 Magazine	              Issue     Article
-
-Toolbox		              03/98	    Eingeschleust           RTM03981.ZIP
-Toolbox	                02/98	    Geschwindigkeitsrausch  RTM02981.ZIP
-Toolbox		              02/98	    Verbindungen            RTM02982.ZIP
-SE		                  11/97	    To join or not to join  RSE11971.ZIP
-Toolbox		              06/97	    An der langen Leine     RTM06971.ZIP
+* Toolbox		              03/98	    Eingeschleust           RTM03981.ZIP
+* Toolbox	                02/98	    Geschwindigkeitsrausch  RTM02981.ZIP
+* Toolbox		              02/98	    Verbindungen            RTM02982.ZIP
+* SE		                  11/97	    To join or not to join  RSE11971.ZIP
+* Toolbox		              06/97	    An der langen Leine     RTM06971.ZIP
 SE		                  07-08/97	DBASE-MEMOS             RSE07971.ZIP
 OS/2 Inside		          07/97	    Auswertungen satt       ROI06971.ZIP
 SE		                  06/97	    Dbase intim             RSE06971.ZIP
