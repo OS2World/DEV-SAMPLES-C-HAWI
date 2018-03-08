@@ -54,7 +54,7 @@ Toolbox & Multimedia|	  06/95	|    Hilfestellung für OS/2      |RTM06951.ZIP
 |OS/2 Inside|	            07/94|	    Das dicke Ende              |ROI07941.ZIP
 |OS/2 Inside|	            06/94|	    Versteckte Informationen    |ROI06941.ZIP
 |OS/2 Inside|             02/94|	    Gib mir die Daten           |ROI02941.ZIP
-|OS/2 Inside | 01/94|     DB2/2 im Griff|              |ROI02941.ZIP
+|OS/2 Inside |            01/94|      DB2/2 im Griff|             |ROI02941.ZIP
 
 LICENSE
 ===============
