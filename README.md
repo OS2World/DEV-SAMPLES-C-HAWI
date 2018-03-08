@@ -2,9 +2,10 @@
 These are OS/2 development samples that Harald Wilhelm wrote from several magazine articles. 
 
 
-Magazine	              Issue     Article
-* Toolbox		              03/98	    Eingeschleust           RTM03981.ZIP
-* Toolbox	                02/98	    Geschwindigkeitsrausch  RTM02981.ZIP
+Magazine|Issue|Article|File
+------------ | -------------| -------------| -------------
+|Toolbox	|03/98| Eingeschleust|RTM03981.ZIP
+|Toolbox	|02/98|Geschwindigkeitsrausch|RTM02981.ZIP
 * Toolbox		              02/98	    Verbindungen            RTM02982.ZIP
 * SE		                  11/97	    To join or not to join  RSE11971.ZIP
 * Toolbox		              06/97	    An der langen Leine     RTM06971.ZIP
